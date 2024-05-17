@@ -1,0 +1,26 @@
+{
+  "name": "kot_admin_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanmayGypt/kot_admin_backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tanmayGypt/kot_admin_backend/issues"
+  },
+  "homepage": "https://github.com/tanmayGypt/kot_admin_backend#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "install": "^0.13.0",
+    "mysql2": "^3.9.7",
+    "npm": "^10.8.0",
+    "sql": "^0.78.0"
+  }
+}
