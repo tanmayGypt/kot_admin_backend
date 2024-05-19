@@ -26,7 +26,7 @@ route.post("/VerifyAdmin", async (req, res) => {
     try {
       const result = await VerifyAdmin(Username, MasterKey);
       if (result) {
-        res.status(200).json({ Message: "Successfully Verified the Admin" });
+        res.status(200).json(res.locals.token);
       } else {
         res.status(404).json({ Message: "Invalid credentials" });
       }
