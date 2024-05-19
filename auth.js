@@ -18,7 +18,7 @@ const auth = (req, res, next) => {
 
       next(); // Proceed to the next middleware or route handler
     } catch (error) {
-      TokenGenerator(req, res, next);
+      res.status(404).json("Invalid Token");
     }
   }
 };
