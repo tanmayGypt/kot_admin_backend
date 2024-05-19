@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+
 function TokenGenerator(req, res, next) {
   const { isAdmin } = req.body;
   if (isAdmin) {
@@ -8,6 +9,9 @@ function TokenGenerator(req, res, next) {
     if (Username && MasterKey) {
       const token = jwt.sign(user, `${process.env.SECRET_KEY}`, {
         expiresIn: "1d",
+      });
+      res.cookie("MyToken", token, {
+        maxAge: 30 * 60 * 1000, // Cookie expires in 30 minutes
       });
       res.locals.token = token;
       next();
@@ -21,6 +25,9 @@ function TokenGenerator(req, res, next) {
       const Guest = { EncodedRoomNo, MobileNumber };
       const token = jwt.sign(Guest, `${process.env.SECRET_KEY}`, {
         expiresIn: "30m",
+      });
+      res.cookie("Your Token", token, {
+        maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
       });
       res.locals.token = token;
       next();

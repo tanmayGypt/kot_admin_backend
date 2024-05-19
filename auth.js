@@ -2,24 +2,24 @@
 const jwt = require("jsonwebtoken");
 const TokenGenerator = require("./TokenGenerator");
 require("dotenv").config();
-const secretKey = "your_secret_key"; // Replace with your actual secret key
 
 const auth = (req, res, next) => {
-  const token =
-    req.headers.authorization && req.headers.authorization.split(" ")[1];
-  if (!token) {
-    TokenGenerator(req, res, next);
-  } else {
-    try {
-      // Verify the token
-      const decoded = jwt.verify(token, secretKey);
-      // Attach the decoded token to the request object
-      res.locals.token = token;
+  if (
+    !req.headers ||
+    !req.headers.authorization ||
+    !req.headers.authorization.startsWith("Bearer")
+  ) {
+    console.log("request", req.user);
+    return res.send(error(401, "Authorization header is required"));
+  }
+  const token = req.headers.authorization.split(" ")[1];
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    res.locals.token = token;
 
-      next(); // Proceed to the next middleware or route handler
-    } catch (error) {
-      res.status(404).json("Invalid Token");
-    }
+    next();
+  } catch (error) {
+    res.status(404).json("Invalid Token");
   }
 };
 

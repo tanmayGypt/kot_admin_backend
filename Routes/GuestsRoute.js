@@ -1,3 +1,5 @@
+const TokenGenerator = require("../TokenGenerator");
+const auth = require("../auth");
 const {
   AddGuest,
   VerifyGuest,
@@ -7,7 +9,7 @@ const express = require("express");
 
 const route = express.Router();
 
-route.post("/AddGuest", (req, res) => {
+route.post("/AddGuest", auth, (req, res) => {
   const {
     RoomNumber,
     RoomId,
@@ -36,7 +38,7 @@ route.post("/AddGuest", (req, res) => {
     });
 });
 
-route.post("/VerifyGuest/:id", (req, res) => {
+route.post("/VerifyGuest/:id", TokenGenerator, (req, res) => {
   const EncodedRoomNo = req.params.id;
   const { MobileNumber } = req.body;
   VerifyGuest(MobileNumber, EncodedRoomNo)
@@ -52,7 +54,7 @@ route.post("/VerifyGuest/:id", (req, res) => {
     });
 });
 
-route.get("/FetchAllGuests", (req, res) => {
+route.get("/FetchAllGuests", auth, (req, res) => {
   FetchAllGuests()
     .then((Items) => {
       res.status(200).send(Items);
