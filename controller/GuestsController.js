@@ -13,8 +13,10 @@ const AddGuest = async (
   IdentityNumber_Hashed,
   MobileNumber
 ) => {
+  const GuestId = md5(RoomNumber + MobileNumber);
   try {
     let data = await Guests.create({
+      GuestId,
       RoomNumber,
       RoomId,
       Customer_Name,
@@ -49,8 +51,8 @@ const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
         MobileNumber,
       },
     });
-    // console.log(response.RoomNumber, md5(response.RoomNumber));
-    if (response && md5(response.RoomNumber) == EncodedRoomNo) {
+    let Hash = md5(response.RoomNumber);
+    if (response && Hash == EncodedRoomNo) {
       return true;
     }
     return false;

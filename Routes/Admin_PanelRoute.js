@@ -22,13 +22,14 @@ route.post("/AddAdmin", auth, async (req, res) => {
   }
 });
 
-route.post("/VerifyAdmin", TokenGenerator, async (req, res) => {
+route.post("/VerifyAdmin", async (req, res) => {
   const { Username, MasterKey } = req.body;
   if (Username && MasterKey) {
     try {
       const result = await VerifyAdmin(Username, MasterKey);
       if (result) {
         res.status(200).json(res.locals.token);
+        TokenGenerator(req, res);
       } else {
         res.status(404).json({ Message: "Invalid credentials" });
       }

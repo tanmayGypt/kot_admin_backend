@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       OrderDetails: {
-        type: DataTypes.STRING, // Use TEXT if the details can be lengthy
+        type: DataTypes.STRING,
         allowNull: true,
       },
     },

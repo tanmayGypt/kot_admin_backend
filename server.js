@@ -12,6 +12,8 @@ const AllPaymentRoute = require("./Routes/AllPaymentsRoute");
 const RoomRoute = require("./Routes/AddRoomRoute");
 const OrderPaymentRoute = require("./Routes/OrderPaymentRoute");
 const auth = require("./auth");
+const OrderedItemsRoute = require("./Routes/OrderedItemsRoute");
+const md5 = require("md5");
 require("dotenv").config();
 app.use(express.json());
 
@@ -37,6 +39,7 @@ app.use("/Order_Payments", auth, OrderPaymentRoute);
 app.use("/Orders", auth, OrderRoute);
 app.use("/Room_Occupation_Transaction", auth, Room_OccupationRoute);
 app.use("/Rooms", auth, RoomRoute);
+app.use("OrderItems", auth, OrderedItemsRoute);
 
 app.listen(PORT, () => {
   console.log(`Backend Server is started on port ${PORT}`);
