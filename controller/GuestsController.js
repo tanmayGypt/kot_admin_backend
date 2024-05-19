@@ -49,7 +49,8 @@ const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
         MobileNumber,
       },
     });
-    if (response && md5(response.RoomNumber) === EncodedRoomNo) {
+    // console.log(response.RoomNumber, md5(response.RoomNumber));
+    if (response && md5(response.RoomNumber) == EncodedRoomNo) {
       return true;
     }
     return false;

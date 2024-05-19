@@ -41,10 +41,14 @@ route.post("/VerifyGuest/:id", (req, res) => {
   const { MobileNumber } = req.body;
   VerifyGuest(MobileNumber, EncodedRoomNo)
     .then((item) => {
-      res.status(200).json("User Verified");
+      if (item) {
+        res.status(200).json(item);
+      } else {
+        res.status(400).json("Invalid Credentials");
+      }
     })
     .catch((Err) => {
-      res.status(400).json({ "Error While Verifying": Err });
+      res.status(400).json("Error While Verifying");
     });
 });
 
