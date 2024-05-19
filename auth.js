@@ -1,6 +1,4 @@
-// middleware/jwtMiddleware.js
 const jwt = require("jsonwebtoken");
-const TokenGenerator = require("./TokenGenerator");
 require("dotenv").config();
 
 const auth = (req, res, next) => {
@@ -10,14 +8,15 @@ const auth = (req, res, next) => {
     !req.headers.authorization.startsWith("Bearer")
   ) {
     console.log("request", req.user);
-    return res.send(error(401, "Authorization header is required"));
+    return res.status(401).json({ error: "Authorization header is required" });
   }
   const token = req.headers.authorization.split(" ")[1];
   try {
-    const decoded = jwt.verify(token, `{process.env.SECRET_KEY}`);
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
     res.locals.token = token;
+    res.locals.decoded = decoded; // Optionally store the decoded token in res.locals
     next();
-  } catch (error) {
+  } catch (e) {
     res.status(404).json("Invalid Token");
   }
 };

@@ -53,7 +53,7 @@ const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
     });
     let Hash = md5(response.RoomNumber);
     if (response && Hash == EncodedRoomNo) {
-      return true;
+      return response;
     }
     return false;
   } catch (e) {
