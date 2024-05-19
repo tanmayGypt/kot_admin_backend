@@ -22,10 +22,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.NUMERIC,
         allowNull: true,
       },
-      OrderedItems: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
       RoomId: {
         type: DataTypes.BIGINT,
         allowNull: true,

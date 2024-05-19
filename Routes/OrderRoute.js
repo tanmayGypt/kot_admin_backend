@@ -29,7 +29,7 @@ route.post("/UpdateOrder/:OrderId", (req, res) => {
     });
 });
 
-route.post("/AddNewOrder", (req, res) => {
+route.post("/AddNewOrder", async (req, res) => {
   const {
     OrderId,
     CustomerId,
@@ -42,7 +42,7 @@ route.post("/AddNewOrder", (req, res) => {
     OrderStatus,
   } = req.body;
 
-  AddNewOrder(
+  await AddNewOrder(
     OrderId,
     CustomerId,
     isPaid,
@@ -53,7 +53,7 @@ route.post("/AddNewOrder", (req, res) => {
     Payment_Mode,
     OrderStatus
   );
-  OrderedItems.forEach((element) => {
+  await OrderedItems.forEach((element) => {
     addOrderItem(
       element.order_id,
       element.item_id,
