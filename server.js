@@ -13,6 +13,7 @@ const RoomRoute = require("./Routes/AddRoomRoute");
 const OrderPaymentRoute = require("./Routes/OrderPaymentRoute");
 const auth = require("./auth");
 const OrderedItemsRoute = require("./Routes/OrderedItemsRoute");
+const md5 = require("md5");
 require("dotenv").config();
 app.use(express.json());
 
