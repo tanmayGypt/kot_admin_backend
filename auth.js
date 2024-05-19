@@ -14,7 +14,7 @@ const auth = (req, res, next) => {
   }
   const token = req.headers.authorization.split(" ")[1];
   try {
-    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const decoded = jwt.verify(token, `{process.env.SECRET_KEY}`);
     res.locals.token = token;
 
     next();
