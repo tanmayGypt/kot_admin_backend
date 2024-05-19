@@ -1,7 +1,7 @@
-const { Op } = require("sequelize"); // Import necessary operators from sequelize
-const db = require("../models");
-const md5 = require("md5");
-const Guests = db.Guests;
+const { Op } = require("sequelize") // Import necessary operators from sequelize
+const db = require("../models")
+const md5 = require("md5")
+const Guests = db.Guests
 
 const AddGuest = async (
   RoomNumber,
@@ -23,24 +23,24 @@ const AddGuest = async (
       IdentityType,
       IdentityNumber_Hashed,
       MobileNumber,
-    });
-    console.log("Data Inserted Successfully");
-    return data;
+    })
+    console.log("Data Inserted Successfully")
+    return data
   } catch (e) {
-    console.log(e);
-    return null; // Return null in case of error
+    console.log(e)
+    return null // Return null in case of error
   }
-};
+}
 
 const FetchAllGuests = async () => {
   try {
-    const GuestData = await Guests.findAll({});
-    return GuestData;
+    const GuestData = await Guests.findAll({})
+    return GuestData
   } catch (e) {
-    console.error("Error fetching guests:", e);
-    return null; // Return null in case of error
+    console.error("Error fetching guests:", e)
+    return null // Return null in case of error
   }
-};
+}
 
 const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
   try {
@@ -48,16 +48,18 @@ const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
       where: {
         MobileNumber,
       },
-    });
+    })
+    const calculatedHash = md5(response.RoomNumber)
+    // console.log("hash", calculatedHash)
     // console.log(response.RoomNumber, md5(response.RoomNumber));
-    if (response && md5(response.RoomNumber) == EncodedRoomNo) {
-      return true;
+    if (response && calculatedHash == EncodedRoomNo) {
+      return response
     }
-    return false;
+    return false
   } catch (e) {
-    console.error("Error verifying guest:", e);
-    return false; // Return false in case of error
+    console.error("Error verifying guest:", e)
+    return false // Return false in case of error
   }
-};
+}
 
-module.exports = { AddGuest, FetchAllGuests, VerifyGuest };
+module.exports = { AddGuest, FetchAllGuests, VerifyGuest }
