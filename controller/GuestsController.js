@@ -1,10 +1,9 @@
-const { where } = require("sequelize");
-let db = require("../models");
-// const Guests = require("../models/Guests");
-let md5 = require("md5");
+const { Op } = require("sequelize"); // Import necessary operators from sequelize
+const db = require("../models");
+const md5 = require("md5");
 const Guests = db.Guests;
 
-let AddGuest = async (
+const AddGuest = async (
   RoomNumber,
   RoomId,
   Customer_Name,
@@ -25,39 +24,38 @@ let AddGuest = async (
       IdentityNumber_Hashed,
       MobileNumber,
     });
-    console.log("Data Iserted Succesfully");
+    console.log("Data Inserted Successfully");
     return data;
   } catch (e) {
     console.log(e);
-    return;
+    return null; // Return null in case of error
   }
 };
 
-let FetchAllGuests = async () => {
+const FetchAllGuests = async () => {
   try {
-    const GuestData = await db.Guests.findAll({});
-    // console.log(GuestData);
+    const GuestData = await Guests.findAll({});
     return GuestData;
   } catch (e) {
-    // console.log(e);
-    return;
+    console.error("Error fetching guests:", e);
+    return null; // Return null in case of error
   }
 };
 
-let VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
+const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
   try {
-    let respose = await findOne({
+    const response = await Guests.findOne({
       where: {
         MobileNumber,
       },
     });
-    if (md5(data.RoomNumber) == EncodedRoomNo) {
+    if (response && md5(response.RoomNumber) === EncodedRoomNo) {
       return true;
     }
     return false;
   } catch (e) {
-    console.log("AllGuest Fetch  Error " + e);
-    return false;
+    console.error("Error verifying guest:", e);
+    return false; // Return false in case of error
   }
 };
 

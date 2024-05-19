@@ -24,8 +24,7 @@ let VerifyAdmin = async (id, Password) => {
       },
     });
 
-    if (data[0].dataValues) return data[0].dataValues;
-    return;
+    return data;
   } catch (e) {
     return e;
   }

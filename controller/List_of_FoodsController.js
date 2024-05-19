@@ -41,7 +41,7 @@ let UpdateFood = async (
   Discount
 ) => {
   try {
-    let data = await List_of_Foods.Update(
+    let data = await List_of_Foods.update(
       { Description, isVeg, isAvailable, ImageUrl, FoodName, Price, Discount },
       {
         where: {
@@ -81,12 +81,21 @@ let FetchFood = async (FoodId) => {
 let RemoveFood = async (FoodId) => {
   try {
     if (FoodId) {
-      let result = await destroy({ FoodId });
+      let result = await List_of_Foods.destroy({
+        where: {
+          FoodId: FoodId,
+        },
+      });
       return result;
     }
   } catch (e) {
     return e;
   }
 };
-
-module.exports = { AddNewFood, UpdateFood, RemoveFood, FetchAllFoods };
+module.exports = {
+  AddNewFood,
+  UpdateFood,
+  RemoveFood,
+  FetchAllFoods,
+  FetchFood,
+};

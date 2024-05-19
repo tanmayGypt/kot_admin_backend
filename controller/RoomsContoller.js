@@ -1,11 +1,11 @@
-const { where } = require("sequelize");
-let db = require("../models");
+const md5 = require("md5"); // Ensure you have the md5 package installed
+const db = require("../models");
 
 const Rooms = db.Rooms;
 
-let AddnewRoom = async (RoomNumber, isOccupied, GuestId, MobileNumber) => {
+const AddnewRoom = async (RoomNumber, isOccupied, GuestId, MobileNumber) => {
   try {
-    let EncodedRoomNo = md5(RoomNumber);
+    let EncodedRoomNo = md5(RoomNumber.toString());
     let result = await Rooms.create({
       EncodedRoomNo,
       RoomNumber,
@@ -13,16 +13,18 @@ let AddnewRoom = async (RoomNumber, isOccupied, GuestId, MobileNumber) => {
       GuestId,
       MobileNumber,
     });
+    console.log(result);
     return result;
   } catch (e) {
-    return;
+    console.error("Error adding new room:", e);
+    return null;
   }
 };
 
-let UpdateRoom = async (RoomId, isOccupied) => {
+const UpdateRoom = async (RoomId, isOccupied) => {
   try {
-    let Row = await Rooms.findOne({ RoomId });
-    if (!Row.GuestId) {
+    let Row = await Rooms.findOne({ where: { RoomId } });
+    if (Row && !Row.GuestId) {
       let Result = await Rooms.update(
         {
           isOccupied,
@@ -31,19 +33,23 @@ let UpdateRoom = async (RoomId, isOccupied) => {
           where: { RoomId },
         }
       );
+      console.log("Update Success " + Result);
+      return Result;
     }
-
     return null;
   } catch (err) {
+    console.error("Error updating room:", err);
     return null;
   }
 };
 
-let FetchAllRooms = async () => {
+const FetchAllRooms = async () => {
   try {
-    let AllRooms = await Rooms.fineAll({});
+    let AllRooms = await Rooms.findAll({});
+    console.log(AllRooms);
     return AllRooms;
   } catch (err) {
+    console.error("Error fetching all rooms:", err);
     return null;
   }
 };

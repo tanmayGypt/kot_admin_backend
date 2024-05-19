@@ -1,7 +1,7 @@
 // models/Guest.js
 module.exports = (sequelize, DataTypes) => {
   const Guest = sequelize.define(
-    "Guest",
+    "Guests",
     {
       RoomNumber: {
         type: DataTypes.INTEGER,
@@ -34,11 +34,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       MobileNumber: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
     },
     {
-      // Options
       tableName: "Guests", // Explicit table name
       timestamps: false, // Disable timestamps if you don't want `createdAt` and `updatedAt`
     }

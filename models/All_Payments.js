@@ -1,12 +1,11 @@
-// models/AllPayments.js
 module.exports = (sequelize, DataTypes) => {
   const AllPayments = sequelize.define(
     "AllPayments",
     {
       PaymentId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
+
         primaryKey: true,
-        autoIncrement: true,
         allowNull: false,
       },
       TransactionId: {
@@ -30,12 +29,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       OrderDetails: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type: DataTypes.STRING, // Use TEXT if the details can be lengthy
+        allowNull: true,
       },
     },
     {
-      // Options
       tableName: "All_Payments", // Explicit table name
       timestamps: false, // Disable timestamps if you don't want `createdAt` and `updatedAt`
     }

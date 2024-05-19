@@ -1,9 +1,8 @@
-const { where } = require("sequelize");
-let db = require("../models");
+const db = require("../models");
 
-const Orders = db.Orders;
+const Order = db.Orders;
 
-let AddNewOrder = async (
+const AddNewOrder = async (
   OrderId,
   CustomerId,
   isPaid,
@@ -15,53 +14,63 @@ let AddNewOrder = async (
   OrderStatus
 ) => {
   try {
-    let result = await Orders.create({
+    // Convert OrderedItems to a JSON string
+    let OrderedItemsStr = JSON.stringify(OrderedItems);
+
+    let result = await Order.create({
       OrderId,
       CustomerId,
       isPaid,
-      OrderedItems,
       TotalAmount,
+      OrderedItems: OrderedItemsStr,
       RoomId,
       CreatedAt,
       Payment_Mode,
       OrderStatus,
     });
-    if (result) return result;
-    return;
-  } catch (e) {
-    return;
+    console.log("Order created successfully:", result);
+    return result;
+  } catch (error) {
+    console.error("Error creating order:", error);
+    throw error; // Ensure the error is propagated
   }
 };
 
-let UpdateOrder = async (OrderId, isPaid, Payment_Mode, OrderStatus) => {
+const UpdateOrder = async (OrderId, isPaid, Payment_Mode, OrderStatus) => {
   try {
-    let result = await Orders.update(
+    let result = await Order.update(
       {
-        OrderStatus,
-        Payment_Mode,
         isPaid,
+        Payment_Mode,
+        OrderStatus,
       },
       {
-        where: {
-          OrderId: OrderId,
-        },
+        where: { OrderId },
       }
     );
 
+    if (result[0] === 0) {
+      console.log(`No order found with OrderId: ${OrderId}`);
+      return null;
+    }
+
+    console.log("Order updated successfully:", result);
     return result;
-  } catch (e) {
-    return;
+  } catch (error) {
+    console.error("Error updating order:", error);
+    throw error; // Ensure the error is propagated
   }
 };
 
-let FetchAllOrders = async () => {
+const FetchAllOrders = async () => {
   try {
-    let response = await Orders.findAll({});
-
+    let response = await Order.findAll({});
+    console.log("Orders fetched successfully:", response);
     return response;
-  } catch (e) {
-    return;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    throw error; // Ensure the error is propagated
   }
 };
 
-module.exports = { UpdateOrder, AddNewOrder, FetchAllOrders };
+module.exports = { AddNewOrder, UpdateOrder, FetchAllOrders };

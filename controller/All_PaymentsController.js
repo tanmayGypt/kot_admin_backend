@@ -23,6 +23,7 @@ const AddAllPayment = async (
       PaymentMode,
       OrderDetails,
     });
+    console.log(data);
     console.log("Payment Inserted Succesfully");
     return data;
   } catch (e) {
@@ -37,7 +38,7 @@ const FetchAllPayments = async () => {
     let data = await All_Payments.findAll();
     return data;
   } catch (e) {
-    return e;
+    return null;
   }
 };
-module.exports = { AddAllPayment, FetchAllGuests };
+module.exports = { AddAllPayment, FetchAllPayments };

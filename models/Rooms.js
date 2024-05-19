@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BIGINT,
         primaryKey: true,
         allowNull: false,
+        default: 1,
         autoIncrement: true, // If you want auto-increment
       },
       EncodedRoomNo: {
