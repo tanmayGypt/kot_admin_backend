@@ -22,10 +22,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.NUMERIC,
         allowNull: true,
       },
-      OrderedItems: {
-        type: DataTypes.STRING, // Changed to VARCHAR(255) to store JSON array
-        allowNull: true,
-      },
       RoomId: {
         type: DataTypes.BIGINT,
         allowNull: true,
@@ -39,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       OrderStatus: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: true,
       },
     },

@@ -21,12 +21,14 @@ const AddnewRoom = async (RoomNumber, isOccupied, GuestId, MobileNumber) => {
   }
 };
 
-const UpdateRoom = async (RoomId, isOccupied) => {
+const UpdateRoom = async (RoomId, isOccupied, MobileNumber, GuestId) => {
   try {
     let Row = await Rooms.findOne({ where: { RoomId } });
-    if (Row && !Row.GuestId) {
+    if (Row) {
       let Result = await Rooms.update(
         {
+          MobileNumber,
+          GuestId,
           isOccupied,
         },
         {

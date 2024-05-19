@@ -36,6 +36,7 @@ db.Order_Payment = require("./Order_Payment")(sequelize, DataTypes);
 db.Orders = require("./Orders")(sequelize, DataTypes);
 db.Room_Occupation = require("./Room_Occupation")(sequelize, DataTypes);
 db.Rooms = require("./Rooms")(sequelize, DataTypes);
+db.OrderItem = require("./OrderedItems")(sequelize, DataTypes);
 db.sequelize.sync().then(() => {
   console.log("Sync Success");
 });

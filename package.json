@@ -18,6 +18,7 @@
   "homepage": "https://github.com/tanmayGypt/kot_admin_backend#readme",
   "dependencies": {
     "@prisma/client": "^5.14.0",
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

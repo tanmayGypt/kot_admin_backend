@@ -38,6 +38,7 @@ route.post("/AddGuest", auth, (req, res) => {
     })
 })
 
+<<<<<<< HEAD
 route.post("/VerifyGuest", (req, res) => {
   const EncodedRoomNo = req.query.roomId
   const { MobileNumber } = req.body
@@ -46,6 +47,16 @@ route.post("/VerifyGuest", (req, res) => {
     .then((item) => {
       if (item) {
         res.status(200).json(item)
+=======
+route.post("/VerifyGuest/:id", (req, res) => {
+  const EncodedRoomNo = req.params.id;
+  const { MobileNumber } = req.body;
+  VerifyGuest(MobileNumber, EncodedRoomNo)
+    .then((item) => {
+      if (item) {
+        res.status(200).json(item);
+        TokenGenerator(req, res);
+>>>>>>> 939e8085d6bc077df8d56a793c5c69ed62c47d31
       } else {
         res.status(400).json("Invalid Credentials")
       }
