@@ -13,11 +13,11 @@ const AddnewRoom = async (RoomNumber, isOccupied, GuestId, MobileNumber) => {
       GuestId,
       MobileNumber,
     });
-    console.log(result);
+    // console.log(result);
     return result;
   } catch (e) {
-    console.error("Error adding new room:", e);
-    return null;
+    // console.error("Error adding new room:", e);
+    return e;
   }
 };
 
@@ -39,7 +39,7 @@ const UpdateRoom = async (RoomId, isOccupied) => {
     return null;
   } catch (err) {
     console.error("Error updating room:", err);
-    return null;
+    return err;
   }
 };
 
