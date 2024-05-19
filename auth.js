@@ -16,7 +16,6 @@ const auth = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, `{process.env.SECRET_KEY}`);
     res.locals.token = token;
-
     next();
   } catch (error) {
     res.status(404).json("Invalid Token");
