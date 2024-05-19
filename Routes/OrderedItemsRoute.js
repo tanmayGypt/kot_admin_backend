@@ -26,3 +26,5 @@ OrderedItemsRoute.get("/GetOrderItemsById/:order_id", (req, res) => {
       res.status(400).json(err);
     });
 });
+
+module.exports = OrderedItemsRoute;

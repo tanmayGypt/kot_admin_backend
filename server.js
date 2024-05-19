@@ -37,6 +37,7 @@ app.use("/Order_Payments", auth, OrderPaymentRoute);
 app.use("/Orders", auth, OrderRoute);
 app.use("/Room_Occupation_Transaction", auth, Room_OccupationRoute);
 app.use("/Rooms", auth, RoomRoute);
+app.use("OrderItems", auth, OrderPaymentRoute);
 
 app.listen(PORT, () => {
   console.log(`Backend Server is started on port ${PORT}`);
