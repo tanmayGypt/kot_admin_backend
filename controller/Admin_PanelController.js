@@ -1,8 +1,6 @@
 const { where } = require("sequelize");
 let db = require("../models");
 
-// const Admin_Panel=require("../models/Admin_Panel");
-
 const Admin_Panel = db.Admin_Panel;
 
 let AddUserAdmin = async (Username, MasterKey) => {

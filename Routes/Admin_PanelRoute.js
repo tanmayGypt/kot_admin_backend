@@ -1,3 +1,5 @@
+const TokenGenerator = require("../TokenGenerator");
+const auth = require("../auth");
 const {
   AddUserAdmin,
   VerifyAdmin,
@@ -6,7 +8,7 @@ const express = require("express");
 
 const route = express.Router();
 
-route.post("/AddAdmin", async (req, res) => {
+route.post("/AddAdmin", auth, async (req, res) => {
   const { Username, MasterKey } = req.body;
   if (Username && MasterKey) {
     try {
@@ -20,7 +22,7 @@ route.post("/AddAdmin", async (req, res) => {
   }
 });
 
-route.post("/VerifyAdmin", async (req, res) => {
+route.post("/VerifyAdmin", TokenGenerator, async (req, res) => {
   const { Username, MasterKey } = req.body;
   if (Username && MasterKey) {
     try {

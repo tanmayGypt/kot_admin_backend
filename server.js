@@ -31,7 +31,7 @@ app.get("/", async (req, res) => {
 
 app.use("/Admin_Panel", Admin_PanelRoute);
 app.use("/All_Payments", auth, AllPaymentRoute);
-app.use("/Guests", auth, GuestsRoute);
+app.use("/Guests", GuestsRoute);
 app.use("/List_of_Foods", auth, List_of_FoodsRoute);
 app.use("/Order_Payments", auth, OrderPaymentRoute);
 app.use("/Orders", auth, OrderRoute);
