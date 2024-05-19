@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         allowNull: false,
       },
+      GuestId: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       Customer_Name: {
         type: DataTypes.STRING,
         allowNull: false,

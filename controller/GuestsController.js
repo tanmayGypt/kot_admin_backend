@@ -13,8 +13,10 @@ const AddGuest = async (
   IdentityNumber_Hashed,
   MobileNumber
 ) => {
+  const GuestId = md5(RoomNumber + MobileNumber);
   try {
     let data = await Guests.create({
+      GuestId,
       RoomNumber,
       RoomId,
       Customer_Name,
