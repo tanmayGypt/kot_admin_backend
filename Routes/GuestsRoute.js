@@ -48,7 +48,7 @@ route.post("/VerifyGuest/:id", (req, res) => {
           EncodedRoomNo,
           MobileNumber
         );
-        res.cookie("Guest Token", token);
+        res.cookie("GuestToken", token);
         res.status(200).json(item);
       } else {
         res.status(400).json("Invalid Credentials");

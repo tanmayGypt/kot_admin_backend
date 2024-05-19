@@ -40,7 +40,7 @@ app.use("/Orders", auth, OrderRoute);
 app.use("/Room_Occupation_Transaction", auth, Room_OccupationRoute);
 app.use("/Rooms", auth, RoomRoute);
 app.use("OrderItems", auth, OrderedItemsRoute);
-
+console.log(md5(100));
 app.listen(PORT, () => {
   console.log(`Backend Server is started on port ${PORT}`);
 });

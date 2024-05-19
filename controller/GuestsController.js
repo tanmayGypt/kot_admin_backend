@@ -1,6 +1,7 @@
 const { Op } = require("sequelize"); // Import necessary operators from sequelize
 const db = require("../models");
 const md5 = require("md5");
+const { guestTokenGenerator } = require("../TokenGenerator");
 const Guests = db.Guests;
 
 const AddGuest = async (
@@ -51,12 +52,9 @@ const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
         MobileNumber,
       },
     });
+    console.log(response);
     let Hash = md5(response.RoomNumber);
     if (response && Hash == EncodedRoomNo) {
-      const token = res.locals.token;
-      res.cookie("Your Token", token, {
-        maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
-      });
       return response;
     }
     return false;
