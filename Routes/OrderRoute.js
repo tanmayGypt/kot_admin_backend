@@ -4,6 +4,7 @@ const {
   UpdateOrder,
   AddNewOrder,
 } = require("../controller/OrdersController");
+const { addOrderItem } = require("../controller/OrderedItemsController");
 const route = express.Router();
 
 route.get("/FetchAllOrders", (req, res) => {
@@ -51,7 +52,16 @@ route.post("/AddNewOrder", (req, res) => {
     CreatedAt,
     Payment_Mode,
     OrderStatus
-  )
+  );
+  OrderedItems.forEach((element) => {
+    addOrderItem(
+      element.order_id,
+      element.item_id,
+      element.Item_Name,
+      element.price,
+      element.quantity
+    );
+  })
     .then((Items) => {
       res.status(200).send(Items);
     })
