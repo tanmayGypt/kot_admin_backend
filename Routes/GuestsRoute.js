@@ -38,12 +38,17 @@ route.post("/AddGuest", auth, (req, res) => {
     });
 });
 
-route.post("/VerifyGuest/:id", TokenGenerator, (req, res) => {
+route.post("/VerifyGuest/:id", (req, res) => {
   const EncodedRoomNo = req.params.id;
   const { MobileNumber } = req.body;
   VerifyGuest(MobileNumber, EncodedRoomNo)
     .then((item) => {
       if (item) {
+        const token = TokenGenerator.guestTokenGenerator(
+          EncodedRoomNo,
+          MobileNumber
+        );
+        res.cookie("Guest Token", token);
         res.status(200).json(item);
       } else {
         res.status(400).json("Invalid Credentials");

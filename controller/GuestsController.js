@@ -53,6 +53,10 @@ const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
     });
     let Hash = md5(response.RoomNumber);
     if (response && Hash == EncodedRoomNo) {
+      const token = res.locals.token;
+      res.cookie("Your Token", token, {
+        maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+      });
       return response;
     }
     return false;
