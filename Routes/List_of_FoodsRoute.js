@@ -1,22 +1,22 @@
-const express = require("express");
+const express = require("express")
 const {
   FetchAllFoods,
   AddNewFood,
   UpdateFood,
   FetchFood,
   RemoveFood,
-} = require("../controller/List_of_FoodsController");
-const route = express.Router();
+} = require("../controller/List_of_FoodsController")
+const route = express.Router()
 
-route.get("FetchAllFood", (req, res) => {
+route.get("/FetchAllFood", (req, res) => {
   FetchAllFoods()
     .then((items) => {
-      res.status(200).json(items);
+      res.status(200).json(items)
     })
     .catch((err) => {
-      res.status(400).json(err);
-    });
-});
+      res.status(400).json(err)
+    })
+})
 
 route.post("/AddNewFood", (req, res) => {
   const {
@@ -28,7 +28,7 @@ route.post("/AddNewFood", (req, res) => {
     FoodName,
     Price,
     Discount,
-  } = req.body;
+  } = req.body
   AddNewFood(
     FoodId,
     Description,
@@ -40,12 +40,12 @@ route.post("/AddNewFood", (req, res) => {
     Discount
   )
     .then((item) => {
-      res.status(200).json(item);
+      res.status(200).json(item)
     })
     .catch((err) => {
-      res.status.json(err);
-    });
-});
+      res.status.json(err)
+    })
+})
 
 route.post("/UpdateFood", (req, res) => {
   const {
@@ -57,7 +57,7 @@ route.post("/UpdateFood", (req, res) => {
     FoodName,
     Price,
     Discount,
-  } = req.body;
+  } = req.body
   UpdateFood(
     FoodId,
     Description,
@@ -69,33 +69,33 @@ route.post("/UpdateFood", (req, res) => {
     Discount
   )
     .then((item) => {
-      res.status(200).json(item);
+      res.status(200).json(item)
     })
     .catch((err) => {
-      res.status.json(err);
-    });
-});
+      res.status.json(err)
+    })
+})
 
 route.get("GetFoodById/:FoodId", (req, res) => {
-  const FoodId = req.params.FoodId;
+  const FoodId = req.params.FoodId
   FetchFood(FoodId)
     .then((item) => {
-      res.status(200).json(item);
+      res.status(200).json(item)
     })
     .catch((err) => {
-      res.status.json(err);
-    });
-});
+      res.status.json(err)
+    })
+})
 
 route.get("/RemoveFood/:FoodId", (req, res) => {
-  const FoodId = req.params.FoodId;
+  const FoodId = req.params.FoodId
   RemoveFood(FoodId)
     .then((item) => {
-      res.status(200).json(item);
+      res.status(200).json(item)
     })
     .catch((err) => {
-      res.status.json(err);
-    });
-});
+      res.status.json(err)
+    })
+})
 
-module.exports = route;
+module.exports = route

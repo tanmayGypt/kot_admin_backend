@@ -1,7 +1,7 @@
-const { Op } = require("sequelize"); // Import necessary operators from sequelize
-const db = require("../models");
-const md5 = require("md5");
-const Guests = db.Guests;
+const { Op } = require("sequelize") // Import necessary operators from sequelize
+const db = require("../models")
+const md5 = require("md5")
+const Guests = db.Guests
 
 const AddGuest = async (
   RoomNumber,
@@ -13,7 +13,7 @@ const AddGuest = async (
   IdentityNumber_Hashed,
   MobileNumber
 ) => {
-  const GuestId = md5(RoomNumber + MobileNumber);
+  const GuestId = md5(RoomNumber + MobileNumber)
   try {
     let data = await Guests.create({
       GuestId,
@@ -25,24 +25,24 @@ const AddGuest = async (
       IdentityType,
       IdentityNumber_Hashed,
       MobileNumber,
-    });
-    console.log("Data Inserted Successfully");
-    return data;
+    })
+    console.log("Data Inserted Successfully")
+    return data
   } catch (e) {
-    console.log(e);
-    return null; // Return null in case of error
+    console.log(e)
+    return null // Return null in case of error
   }
-};
+}
 
 const FetchAllGuests = async () => {
   try {
-    const GuestData = await Guests.findAll({});
-    return GuestData;
+    const GuestData = await Guests.findAll({})
+    return GuestData
   } catch (e) {
-    console.error("Error fetching guests:", e);
-    return null; // Return null in case of error
+    console.error("Error fetching guests:", e)
+    return null // Return null in case of error
   }
-};
+}
 
 const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
   try {
@@ -50,16 +50,18 @@ const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
       where: {
         MobileNumber,
       },
-    });
-    let Hash = md5(response.RoomNumber);
+    })
+    let Hash = md5(response.RoomNumber)
     if (response && Hash == EncodedRoomNo) {
-      return response;
+      const { GuestId, RoomId, RoomNumber } = response
+      const result = { GuestId, RoomId, RoomNumber }
+      return result
     }
-    return false;
+    return false
   } catch (e) {
-    console.error("Error verifying guest:", e);
-    return false; // Return false in case of error
+    console.error("Error verifying guest:", e)
+    return false // Return false in case of error
   }
-};
+}
 
-module.exports = { AddGuest, FetchAllGuests, VerifyGuest };
+module.exports = { AddGuest, FetchAllGuests, VerifyGuest }
