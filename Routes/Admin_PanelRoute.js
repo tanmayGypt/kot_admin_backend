@@ -23,16 +23,26 @@ route.post("/AddAdmin", auth, async (req, res) => {
 })
 
 route.post("/VerifyAdmin", async (req, res) => {
+<<<<<<< HEAD
   const { Username, MasterKey } = req.body
+=======
+  const { Username, MasterKey } = req.body;
+>>>>>>> 60ecd853347a991f7158f9db2fb0e60d4a073e81
   if (Username && MasterKey) {
     try {
       const result = await VerifyAdmin(Username, MasterKey)
       if (result) {
+<<<<<<< HEAD
         const token = adminTokenGenerator(Username)
         res.cookie("jwt", token, {
           maxAge: 30 * 60 * 1000,
         })
         res.status(200).json(result)
+=======
+        const token = TokenGenerator.adminTokenGenerator(Username);
+        res.cookie("MyToken", token);
+        res.status(200).json(result);
+>>>>>>> 60ecd853347a991f7158f9db2fb0e60d4a073e81
       } else {
         res.status(404).json({ Message: "Invalid credentials" })
       }

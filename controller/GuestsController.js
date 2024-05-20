@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 const { Op } = require("sequelize") // Import necessary operators from sequelize
 const db = require("../models")
 const md5 = require("md5")
 const Guests = db.Guests
+=======
+const { Op } = require("sequelize"); // Import necessary operators from sequelize
+const db = require("../models");
+const md5 = require("md5");
+const { guestTokenGenerator } = require("../TokenGenerator");
+const Guests = db.Guests;
+>>>>>>> 60ecd853347a991f7158f9db2fb0e60d4a073e81
 
 const AddGuest = async (
   RoomNumber,
@@ -50,8 +58,14 @@ const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
       where: {
         MobileNumber,
       },
+<<<<<<< HEAD
     })
     let Hash = md5(response.RoomNumber)
+=======
+    });
+    console.log(response);
+    let Hash = md5(response.RoomNumber);
+>>>>>>> 60ecd853347a991f7158f9db2fb0e60d4a073e81
     if (response && Hash == EncodedRoomNo) {
       const { GuestId, RoomId, RoomNumber } = response
       const result = { GuestId, RoomId, RoomNumber }
