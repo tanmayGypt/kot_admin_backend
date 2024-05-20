@@ -33,7 +33,6 @@ app.get("/", async (req, res) => {
   res.send("Server Started, This is Homepage")
 })
 
-<<<<<<< HEAD
 app.use("/Admin_Panel", Admin_PanelRoute)
 app.use("/All_Payments", auth, AllPaymentRoute)
 app.use("/Guests", GuestsRoute)
@@ -44,18 +43,6 @@ app.use("/Room_Occupation_Transaction", auth, Room_OccupationRoute)
 app.use("/Rooms", auth, RoomRoute)
 app.use("OrderItems", auth, OrderedItemsRoute)
 
-=======
-app.use("/Admin_Panel", Admin_PanelRoute);
-app.use("/All_Payments", auth, AllPaymentRoute);
-app.use("/Guests", GuestsRoute);
-app.use("/List_of_Foods", auth, List_of_FoodsRoute);
-app.use("/Order_Payments", auth, OrderPaymentRoute);
-app.use("/Orders", auth, OrderRoute);
-app.use("/Room_Occupation_Transaction", auth, Room_OccupationRoute);
-app.use("/Rooms", auth, RoomRoute);
-app.use("OrderItems", auth, OrderedItemsRoute);
-console.log(md5(100));
->>>>>>> 60ecd853347a991f7158f9db2fb0e60d4a073e81
 app.listen(PORT, () => {
   console.log(`Backend Server is started on port ${PORT}`)
 })
