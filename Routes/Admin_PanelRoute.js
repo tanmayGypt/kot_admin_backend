@@ -22,7 +22,7 @@ route.post("/AddAdmin", auth, async (req, res) => {
   }
 });
 
-route.post("/VerifyAdmin", async (req, res) => {
+route.post("/VerifyAdmin", auth, async (req, res) => {
   const { Username, MasterKey } = req.body;
   if (Username && MasterKey) {
     try {

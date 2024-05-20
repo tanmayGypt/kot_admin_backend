@@ -13,6 +13,7 @@ const guestTokenGenerator = (EncodedRoomNo, MobileNumber) => {
     console.log(e);
   }
 };
+
 const adminTokenGenerator = (Username) => {
   try {
     const User = { Username };
