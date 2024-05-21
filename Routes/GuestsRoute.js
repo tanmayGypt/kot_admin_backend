@@ -46,7 +46,9 @@ route.post("/VerifyGuest", (req, res) => {
       if (item) {
         const token = guestTokenGenerator(EncodedRoomNo, MobileNumber)
         res.cookie("jwt", token, {
-          httpOnly: true,
+          httpOnly: false,
+          maxAge: 30 * 60 * 1000,
+          // maxAge: 60 * 1000, // 1 minute
         })
         res.send(item)
       } else {

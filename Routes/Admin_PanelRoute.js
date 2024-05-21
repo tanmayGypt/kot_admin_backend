@@ -30,7 +30,7 @@ route.post("/VerifyAdmin", async (req, res) => {
       if (result) {
         const token = adminTokenGenerator(Username)
         res.cookie("jwt", token, {
-          maxAge: 30 * 60 * 1000,
+          maxAge: 24 * 60 * 60 * 1000, // 1 day
         })
         res.status(200).json(result)
       } else {
