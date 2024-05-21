@@ -1,10 +1,9 @@
 const express = require("express");
-require("./models/index");
 const Guests = require("./Routes/GuestsRoute");
 const cors = require("cors");
 const Admin_PanelRoute = require("./Routes/Admin_PanelRoute");
 const GuestsRoute = require("./Routes/GuestsRoute");
-
+require("./models/index");
 const app = express();
 const List_of_FoodsRoute = require("./Routes/List_of_FoodsRoute");
 const OrderRoute = require("./Routes/OrderRoute");
@@ -15,18 +14,19 @@ const OrderPaymentRoute = require("./Routes/OrderPaymentRoute");
 const auth = require("./auth");
 const OrderedItemsRoute = require("./Routes/OrderedItemsRoute");
 const md5 = require("md5");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
-app.use(express.json());
-
-app.use(cors());
 app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173/",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
+app.use(express.json());
+app.use(cookieParser());
+
 const PORT = process.env.PORT || 3000;
 
 app.get("/", async (req, res) => {
@@ -34,15 +34,15 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/Admin_Panel", Admin_PanelRoute);
-app.use("/All_Payments", auth, AllPaymentRoute);
+app.use("/All_Payments", AllPaymentRoute);
 app.use("/Guests", GuestsRoute);
-app.use("/List_of_Foods", auth, List_of_FoodsRoute);
-app.use("/Order_Payments", auth, OrderPaymentRoute);
-app.use("/Orders", auth, OrderRoute);
-app.use("/Room_Occupation_Transaction", auth, Room_OccupationRoute);
-app.use("/Rooms", auth, RoomRoute);
-app.use("OrderItems", auth, OrderedItemsRoute);
-console.log(md5(100));
+app.use("/List_of_Foods", List_of_FoodsRoute);
+app.use("/Order_Payments", OrderPaymentRoute);
+app.use("/Orders", OrderRoute);
+app.use("/Room_Occupation_Transaction", Room_OccupationRoute);
+app.use("/Rooms", RoomRoute);
+app.use("/OrderItems", OrderedItemsRoute);
+
 app.listen(PORT, () => {
   console.log(`Backend Server is started on port ${PORT}`);
 });

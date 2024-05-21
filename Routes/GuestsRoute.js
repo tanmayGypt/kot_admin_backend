@@ -1,15 +1,17 @@
-const TokenGenerator = require("../TokenGenerator");
+const { guestTokenGenerator } = require("../TokenGenerator");
 const auth = require("../auth");
 const {
   AddGuest,
   VerifyGuest,
   FetchAllGuests,
+  FetchGuestById,
+  DeleteGuestById,
 } = require("../controller/GuestsController");
 const express = require("express");
 
 const route = express.Router();
 
-route.post("/AddGuest", auth, (req, res) => {
+route.post("/AddGuest", (req, res) => {
   const {
     RoomNumber,
     RoomId,
@@ -38,18 +40,17 @@ route.post("/AddGuest", auth, (req, res) => {
     });
 });
 
-route.post("/VerifyGuest/:id", (req, res) => {
-  const EncodedRoomNo = req.params.id;
+route.post("/VerifyGuest", (req, res) => {
+  const EncodedRoomNo = req.query.roomId;
   const { MobileNumber } = req.body;
   VerifyGuest(MobileNumber, EncodedRoomNo)
     .then((item) => {
       if (item) {
-        const token = TokenGenerator.guestTokenGenerator(
-          EncodedRoomNo,
-          MobileNumber
-        );
-        res.cookie("GuestToken", token);
-        res.status(200).json(item);
+        const token = guestTokenGenerator(EncodedRoomNo, MobileNumber);
+        res.cookie("jwt", token, {
+          httpOnly: true,
+        });
+        res.send(item);
       } else {
         res.status(400).json("Invalid Credentials");
       }
@@ -59,8 +60,29 @@ route.post("/VerifyGuest/:id", (req, res) => {
     });
 });
 
-route.get("/FetchAllGuests", auth, (req, res) => {
+route.get("/FetchAllGuests", (req, res) => {
   FetchAllGuests()
+    .then((Items) => {
+      res.status(200).send(Items);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+route.get("/FetchGuestById/:RoomId", (req, res) => {
+  const RoomId = req.params.RoomId;
+  FetchGuestById(RoomId)
+    .then((Items) => {
+      res.status(200).send(Items);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
+route.get("/DeleteGuestById/:RoomId", (req, res) => {
+  const RoomId = req.params.RoomId;
+  DeleteGuestById(RoomId)
     .then((Items) => {
       res.status(200).send(Items);
     })

@@ -1,4 +1,6 @@
+const { where } = require("sequelize");
 const db = require("../models");
+const { FetchRoomById } = require("./RoomsContoller");
 
 const Order = db.Orders;
 
@@ -13,32 +15,34 @@ const AddNewOrder = async (
   OrderStatus
 ) => {
   try {
-    // Convert OrderedItems to a JSON string
-    let OrderedItemsStr = JSON.stringify(OrderedItems);
-
-    let result = await Order.create({
-      OrderId,
-      CustomerId,
-      isPaid,
-      TotalAmount,
-      RoomId,
-      CreatedAt,
-      Payment_Mode,
-      OrderStatus,
-    });
-    console.log("Order created successfully:", result);
-    return result;
+    let Room = FetchRoomById(RoomId);
+    if (Room) {
+      let result = await Order.create({
+        OrderId,
+        CustomerId,
+        isPaid,
+        TotalAmount,
+        RoomId: Room.RoomNumber,
+        CreatedAt,
+        Payment_Mode,
+        OrderStatus,
+      });
+      console.log("Order created successfully:", result);
+      return result;
+    } else {
+      return null;
+    }
   } catch (error) {
     console.error("Error creating order:", error);
     throw error; // Ensure the error is propagated
   }
 };
 
-const UpdateOrder = async (OrderId, isPaid, Payment_Mode, OrderStatus) => {
+const UpdateOrder = async (OrderId, Status, Payment_Mode, OrderStatus) => {
   try {
     let result = await Order.update(
       {
-        isPaid,
+        isPaid: Status,
         Payment_Mode,
         OrderStatus,
       },
@@ -70,5 +74,19 @@ const FetchAllOrders = async () => {
     throw error; // Ensure the error is propagated
   }
 };
+const FetchOrderById = async (OrderId) => {
+  try {
+    let response = await Order.findOne({
+      where: {
+        OrderId,
+      },
+    });
+    console.log("Order fetched successfully:", response);
+    return response;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    throw error; // Ensure the error is propagated
+  }
+};
 
-module.exports = { AddNewOrder, UpdateOrder, FetchAllOrders };
+module.exports = { AddNewOrder, UpdateOrder, FetchAllOrders, FetchOrderById };

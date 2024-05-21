@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    order_id: {
+    OrderId: {
       type: DataTypes.STRING,
       allowNull: false,
     },

@@ -1,4 +1,6 @@
 const express = require("express");
+const { v4: uuidv4 } = require("uuid");
+
 const {
   AddAllPayment,
   FetchAllPayments,
@@ -6,21 +8,16 @@ const {
 const AllPaymentRoute = express.Router();
 
 AllPaymentRoute.post("/AddAllPayment", (req, res) => {
-  const {
-    PaymentId,
-    TransactionId,
-    OrderId,
-    RoomId,
-    Status,
-    PaymentMode,
-    OrderDetails,
-  } = req.body;
+  const { OrderId, RoomId, PaymentStatus, PaymentMode, OrderDetails } =
+    req.body;
+  PaymentId = uuidv4();
+  TransactionId = uuidv4();
   AddAllPayment(
     PaymentId,
     TransactionId,
     OrderId,
     RoomId,
-    Status,
+    PaymentStatus,
     PaymentMode,
     OrderDetails
   )
@@ -32,12 +29,15 @@ AllPaymentRoute.post("/AddAllPayment", (req, res) => {
     });
 });
 
-AllPaymentRoute.get("/FetchAllPayments", (req, res) => {
-  FetchAllPayments.then((item) => {
-    res.status(200).json(item);
-  }).catch((err) => {
-    res.status.json(err);
-  });
+AllPaymentRoute.get("/FetchAllPayments", async (req, res) => {
+  try {
+    const items = await FetchAllPayments();
+    res.status(200).json(items);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
+
+module.exports = AllPaymentRoute;
 
 module.exports = AllPaymentRoute;

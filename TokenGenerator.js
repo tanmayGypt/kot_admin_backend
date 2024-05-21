@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+
 const guestTokenGenerator = (EncodedRoomNo, MobileNumber) => {
   try {
     const Guest = { EncodedRoomNo, MobileNumber };
@@ -7,13 +8,11 @@ const guestTokenGenerator = (EncodedRoomNo, MobileNumber) => {
       expiresIn: "30m",
     });
 
-    console.log(token);
     return token;
   } catch (e) {
     console.log(e);
   }
 };
-
 const adminTokenGenerator = (Username) => {
   try {
     const User = { Username };
@@ -21,12 +20,10 @@ const adminTokenGenerator = (Username) => {
       expiresIn: "1d",
     });
 
-    console.log("Token Generated " + token);
     return token;
   } catch (e) {
     console.log(e);
-    return null;
   }
 };
 
-module.exports = { adminTokenGenerator, guestTokenGenerator };
+module.exports = { guestTokenGenerator, adminTokenGenerator };

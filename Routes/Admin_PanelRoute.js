@@ -8,7 +8,7 @@ const express = require("express");
 
 const route = express.Router();
 
-route.post("/AddAdmin", auth, async (req, res) => {
+route.post("/AddAdmin", async (req, res) => {
   const { Username, MasterKey } = req.body;
   if (Username && MasterKey) {
     try {
@@ -22,19 +22,23 @@ route.post("/AddAdmin", auth, async (req, res) => {
   }
 });
 
-route.post("/VerifyAdmin", auth, async (req, res) => {
+route.post("/VerifyAdmin", async (req, res) => {
   const { Username, MasterKey } = req.body;
+
   if (Username && MasterKey) {
     try {
       const result = await VerifyAdmin(Username, MasterKey);
       if (result) {
         const token = TokenGenerator.adminTokenGenerator(Username);
-        res.cookie("MyToken", token);
+        res.cookie("jwt", token, {
+          maxAge: 30 * 60 * 1000,
+        });
         res.status(200).json(result);
       } else {
         res.status(404).json({ Message: "Invalid credentials" });
       }
     } catch (error) {
+      console.log(error);
       res.status(400).json({ Message: "User Not Found" });
     }
   } else {
