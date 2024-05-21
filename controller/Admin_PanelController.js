@@ -27,5 +27,22 @@ let VerifyAdmin = async (id, Password) => {
     return e;
   }
 };
+let UpdateAdmin = async (Token, Username, MasterKey) => {
+  try {
+    let data = await Admin_Panel.update(
+      { Token: Token },
+      {
+        where: {
+          Username: Username,
+          MasterKey,
+        },
+      }
+    );
 
-module.exports = { AddUserAdmin, VerifyAdmin };
+    return data;
+  } catch (e) {
+    return e;
+  }
+};
+
+module.exports = { AddUserAdmin, VerifyAdmin, UpdateAdmin };

@@ -3,12 +3,13 @@ const auth = require("../auth");
 const {
   AddUserAdmin,
   VerifyAdmin,
+  UpdateAdmin,
 } = require("../controller/Admin_PanelController");
 const express = require("express");
 
 const route = express.Router();
 
-route.post("/AddAdmin", async (req, res) => {
+route.post("/AddAdmin", auth, async (req, res) => {
   const { Username, MasterKey } = req.body;
   if (Username && MasterKey) {
     try {
@@ -22,21 +23,39 @@ route.post("/AddAdmin", async (req, res) => {
   }
 });
 
+route.post("/UpdateAdmin/:Username", auth, async (req, res) => {
+  const Username = req.params.Username;
+  const { MasterKey, Token } = req.body;
+  if (Username && MasterKey) {
+    try {
+      const result = await UpdateAdmin(Token, Username, MasterKey);
+      res.status(200).json({ Message: "Successfully Updated the Admin" });
+    } catch (error) {
+      res.status(400).json({ Message: "User Already Exists" });
+    }
+  } else {
+    res.status(404).json({ Message: "Invalid credentials" });
+  }
+});
+
 route.post("/VerifyAdmin", async (req, res) => {
   const { Username, MasterKey } = req.body;
 
   if (Username && MasterKey) {
     try {
-      const result = await VerifyAdmin(Username, MasterKey);
-      if (result) {
-        const token = TokenGenerator.adminTokenGenerator(Username);
-        res.cookie("jwt", token, {
-          maxAge: 30 * 60 * 1000,
-        });
-        res.status(200).json(result);
-      } else {
-        res.status(404).json({ Message: "Invalid credentials" });
-      }
+      VerifyAdmin(Username, MasterKey).then((result) => {
+        if (result) {
+          const token = TokenGenerator.adminTokenGenerator(Username);
+          res.cookie("jwt", token, {
+            maxAge: 30 * 60 * 1000,
+          });
+          // console.log(token);
+          console.log(result);
+          res.status(200).json(result);
+        } else {
+          res.status(404).json({ Message: "Invalid credentials" });
+        }
+      });
     } catch (error) {
       console.log(error);
       res.status(400).json({ Message: "User Not Found" });

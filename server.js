@@ -30,17 +30,18 @@ app.use(cookieParser());
 const PORT = process.env.PORT || 3000;
 
 app.get("/", async (req, res) => {
+  console.log(req.cookies);
   res.send("Server Started, This is Homepage");
 });
 
 app.use("/Admin_Panel", Admin_PanelRoute);
-app.use("/All_Payments", AllPaymentRoute);
+app.use("/All_Payments", auth, AllPaymentRoute);
 app.use("/Guests", GuestsRoute);
 app.use("/List_of_Foods", List_of_FoodsRoute);
-app.use("/Order_Payments", OrderPaymentRoute);
+app.use("/Order_Payments", auth, OrderPaymentRoute);
 app.use("/Orders", OrderRoute);
-app.use("/Room_Occupation_Transaction", Room_OccupationRoute);
-app.use("/Rooms", RoomRoute);
+app.use("/Room_Occupation_Transaction", auth, Room_OccupationRoute);
+app.use("/Rooms", auth, RoomRoute);
 app.use("/OrderItems", OrderedItemsRoute);
 
 app.listen(PORT, () => {
