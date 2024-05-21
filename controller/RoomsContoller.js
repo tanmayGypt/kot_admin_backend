@@ -5,7 +5,7 @@ const Rooms = db.Rooms;
 
 const AddnewRoom = async (RoomNumber, isOccupied, GuestId, MobileNumber) => {
   try {
-    let EncodedRoomNo = md5(RoomNumber.toString());
+    let EncodedRoomNo = md5(RoomNumber);
     let result = await Rooms.create({
       EncodedRoomNo,
       RoomNumber,
@@ -21,15 +21,21 @@ const AddnewRoom = async (RoomNumber, isOccupied, GuestId, MobileNumber) => {
   }
 };
 
-const UpdateRoom = async (RoomId, isOccupied, MobileNumber, GuestId) => {
-  try {
-    let Row = await Rooms.findOne({ where: { RoomId } });
-    if (Row) {
+const UpdateRoom = async (
+  RoomId,
+  isOccupied,
+  MobileNumber,
+  Customer_Name,
+  GuestId
+) => {
+  if (RoomId) {
+    try {
       let Result = await Rooms.update(
         {
-          MobileNumber,
-          GuestId,
-          isOccupied,
+          GuestId: GuestId,
+          MobileNumber: MobileNumber,
+          isOccupied: isOccupied,
+          Customer_Name: Customer_Name,
         },
         {
           where: { RoomId },
@@ -37,11 +43,21 @@ const UpdateRoom = async (RoomId, isOccupied, MobileNumber, GuestId) => {
       );
       console.log("Update Success " + Result);
       return Result;
+    } catch (err) {
+      console.error("Error updating room:", err);
+      return err;
     }
+  } else {
+    throw new Error("Please Fill All The fields of updating room");
+  }
+};
+
+const FetchRoomById = async (RoomId) => {
+  try {
+    let Row = await Rooms.findOne({ where: { RoomId } });
+    return Row;
+  } catch (e) {
     return null;
-  } catch (err) {
-    console.error("Error updating room:", err);
-    return err;
   }
 };
 
@@ -56,4 +72,4 @@ const FetchAllRooms = async () => {
   }
 };
 
-module.exports = { FetchAllRooms, UpdateRoom, AddnewRoom };
+module.exports = { FetchAllRooms, UpdateRoom, AddnewRoom, FetchRoomById };

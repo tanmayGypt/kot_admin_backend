@@ -5,7 +5,7 @@ const OrderItem = db.OrderItem;
 const addOrderItem = async (orderId, itemId, Item_Name, price, quantity) => {
   try {
     const orderItem = await OrderItem.create({
-      order_id: orderId,
+      OrderId: orderId,
       item_id: itemId,
       Item_Name: Item_Name,
       price: price,
@@ -30,11 +30,11 @@ const fetchAllOrderItems = async () => {
   }
 };
 
-const fetchOrderItemsById = async () => {
+const fetchOrderItemsByOrderId = async (OrderId) => {
   try {
     const orderItems = await OrderItem.findAll({
       where: {
-        order_id: order_id,
+        OrderId: OrderId,
       },
     });
     console.log("All order items:", orderItems);
@@ -45,4 +45,4 @@ const fetchOrderItemsById = async () => {
   }
 };
 
-module.exports = { addOrderItem, fetchAllOrderItems, fetchOrderItemsById };
+module.exports = { addOrderItem, fetchAllOrderItems, fetchOrderItemsByOrderId };

@@ -58,6 +58,7 @@ let UpdateFood = async (
 let FetchAllFoods = async () => {
   try {
     let data = await List_of_Foods.findAll({});
+
     return data;
   } catch (e) {
     return;
@@ -65,13 +66,16 @@ let FetchAllFoods = async () => {
 };
 
 let FetchFood = async (FoodId) => {
+  if (!FoodId) {
+    throw new Error("FoodId is required");
+  }
   try {
     let Food = await List_of_Foods.findOne({
       where: {
-        FoodId: FoodId,
+        FoodId,
       },
     });
-
+    console.log(Food);
     return Food;
   } catch (e) {
     return e;
@@ -80,18 +84,36 @@ let FetchFood = async (FoodId) => {
 
 let RemoveFood = async (FoodId) => {
   try {
-    if (FoodId) {
-      let result = await List_of_Foods.destroy({
-        where: {
-          FoodId: FoodId,
-        },
-      });
-      return result;
+    // Check if FoodId is provided
+    if (!FoodId) {
+      throw new Error("FoodId is required");
     }
+
+    // Attempt to delete the food item
+    let result = await List_of_Foods.destroy({
+      where: {
+        FoodId: FoodId,
+      },
+    });
+
+    // Check if the food item was deleted
+    if (result === 0) {
+      throw new Error(`Food with FoodId ${FoodId} not found`);
+    }
+
+    // Return the result of the deletion operation
+    return {
+      message: `Food with FoodId ${FoodId} successfully deleted`,
+      result: result,
+    };
   } catch (e) {
-    return e;
+    console.error(`Error removing food with FoodId ${FoodId}:`, e.message);
+    return {
+      error: e.message,
+    };
   }
 };
+
 module.exports = {
   AddNewFood,
   UpdateFood,
