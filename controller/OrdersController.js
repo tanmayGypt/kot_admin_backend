@@ -89,4 +89,25 @@ const FetchOrderById = async (OrderId) => {
   }
 };
 
-module.exports = { AddNewOrder, UpdateOrder, FetchAllOrders, FetchOrderById };
+const FetchOrderByCustomerId = async (CustomerId) => {
+  try {
+    let response = await Order.findOne({
+      where: {
+        CustomerId,
+        isPaid: false,
+      },
+    });
+    console.log("Order fetched successfully:", response);
+    return response;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    throw error; // Ensure the error is propagated
+  }
+};
+module.exports = {
+  AddNewOrder,
+  UpdateOrder,
+  FetchAllOrders,
+  FetchOrderById,
+  FetchOrderByCustomerId,
+};

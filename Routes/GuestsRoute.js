@@ -11,7 +11,7 @@ const express = require("express");
 
 const route = express.Router();
 
-route.post("/AddGuest", (req, res) => {
+route.post("/AddGuest", auth, (req, res) => {
   const {
     RoomNumber,
     RoomId,
@@ -48,17 +48,9 @@ route.post("/VerifyGuest", (req, res) => {
       if (item) {
         const token = guestTokenGenerator(EncodedRoomNo, MobileNumber);
         res.cookie("jwt", token, {
-<<<<<<< HEAD
-          httpOnly: false,
-          maxAge: 30 * 60 * 1000,
-          // maxAge: 60 * 1000, // 1 minute
-        })
-        res.send(item)
-=======
           httpOnly: true,
         });
         res.send(item);
->>>>>>> 9cae4b13ff2dcca8e30463e440b121b691b14680
       } else {
         res.status(400).json("Invalid Credentials");
       }
@@ -68,7 +60,7 @@ route.post("/VerifyGuest", (req, res) => {
     });
 });
 
-route.get("/FetchAllGuests", (req, res) => {
+route.get("/FetchAllGuests", auth, (req, res) => {
   FetchAllGuests()
     .then((Items) => {
       res.status(200).send(Items);
@@ -77,7 +69,7 @@ route.get("/FetchAllGuests", (req, res) => {
       res.status(404).json(err);
     });
 });
-route.get("/FetchGuestById/:RoomId", (req, res) => {
+route.get("/FetchGuestById/:RoomId", auth, (req, res) => {
   const RoomId = req.params.RoomId;
   FetchGuestById(RoomId)
     .then((Items) => {
@@ -88,7 +80,7 @@ route.get("/FetchGuestById/:RoomId", (req, res) => {
     });
 });
 
-route.get("/DeleteGuestById/:RoomId", (req, res) => {
+route.get("/DeleteGuestById/:RoomId", auth, (req, res) => {
   const RoomId = req.params.RoomId;
   DeleteGuestById(RoomId)
     .then((Items) => {

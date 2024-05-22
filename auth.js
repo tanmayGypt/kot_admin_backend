@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const auth = (req, res, next) => {
   const cookies = req.cookies;
-
+  console.log(cookies);
   if (!cookies.jwt) {
     console.log("token expired");
     return res.status(401).json({ error: "token in cookie is required" });

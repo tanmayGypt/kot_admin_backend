@@ -1,9 +1,10 @@
 const express = require("express");
+require("./models/index");
+
 const Guests = require("./Routes/GuestsRoute");
 const cors = require("cors");
 const Admin_PanelRoute = require("./Routes/Admin_PanelRoute");
 const GuestsRoute = require("./Routes/GuestsRoute");
-require("./models/index");
 const app = express();
 const List_of_FoodsRoute = require("./Routes/List_of_FoodsRoute");
 const OrderRoute = require("./Routes/OrderRoute");
@@ -30,6 +31,7 @@ app.use(cookieParser());
 const PORT = process.env.PORT || 3000;
 
 app.get("/", async (req, res) => {
+  console.log(req.cookies);
   res.send("Server Started, This is Homepage");
 });
 
