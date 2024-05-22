@@ -1,5 +1,6 @@
 const md5 = require("md5"); // Ensure you have the md5 package installed
 const db = require("../models");
+const { where } = require("sequelize");
 
 const Rooms = db.Rooms;
 
@@ -56,6 +57,26 @@ const FetchRoomById = async (RoomId) => {
   try {
     let Row = await Rooms.findOne({ where: { RoomId } });
     return Row;
+  } catch (e) {
+    return null;
+  }
+};
+
+const UpdateRoomById = async (RoomId, isOccupied) => {
+  try {
+    let Row = await Rooms.findOne({ where: { RoomId } });
+    if (!Row.GuestId && !Row.MobileNumber) {
+      let response = await Rooms.update(
+        { isOccupied },
+        {
+          where: {
+            RoomId,
+          },
+        }
+      );
+      return response;
+    }
+    return null;
   } catch (e) {
     return null;
   }

@@ -5,6 +5,7 @@ const {
   UpdateOrder,
   AddNewOrder,
   FetchOrderById,
+  FetchOrderByCustomerId,
 } = require("../controller/OrdersController");
 const { addOrderItem } = require("../controller/OrderedItemsController");
 const { UUIDV4 } = require("sequelize");
@@ -29,7 +30,16 @@ route.get("/FetchOrderById/:OrderId", (req, res) => {
       res.status(404).json(err);
     });
 });
-
+route.get("/FetchOrderByCustomerId/:CustomerId", (req, res) => {
+  const CustomerId = req.params.CustomerId;
+  FetchOrderByCustomerId(CustomerId)
+    .then((Items) => {
+      res.status(200).send(Items);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
 route.post("/UpdateOrder/:OrderId", (req, res) => {
   const OrderId = req.params.OrderId;
   const { isPaid, Payment_Mode, OrderStatus } = req.body;

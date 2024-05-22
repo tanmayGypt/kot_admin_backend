@@ -3,9 +3,9 @@ let db = require("../models");
 
 const Admin_Panel = db.Admin_Panel;
 
-let AddUserAdmin = async (Username, MasterKey) => {
+let AddUserAdmin = async (Username, MasterKey, token = null) => {
   try {
-    let data = await Admin_Panel.create({ Username, MasterKey });
+    let data = await Admin_Panel.create({ Username, MasterKey, Token: token });
     console.log("Data Inserted Succesfully ", data);
     return data;
   } catch (e) {

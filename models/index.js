@@ -6,9 +6,10 @@ const sequelize = new Sequelize(
   process.env.AmazonRDSuser,
   process.env.AmazonRDSpassword,
   {
-    host: process.env.AmazonRDSendpoit,
+    host: process.env.AmazonRDSendpoint,
     port: process.env.AmazonRDSport,
     dialect: "mysql",
+    logging: false, // Disable logging; default: console.log
   }
 );
 
@@ -18,7 +19,7 @@ sequelize
     console.log("Connected to Sequelize");
   })
   .catch((err) => {
-    console.error("Error");
+    console.error("Unable to connect to the database:", err);
   });
 
 const db = {};
@@ -37,8 +38,14 @@ db.Orders = require("./Orders")(sequelize, DataTypes);
 db.Room_Occupation = require("./Room_Occupation")(sequelize, DataTypes);
 db.Rooms = require("./Rooms")(sequelize, DataTypes);
 db.OrderItem = require("./OrderedItems")(sequelize, DataTypes);
-db.sequelize.sync().then(() => {
-  console.log("Sync Success");
-});
+
+db.sequelize
+  .sync()
+  .then(() => {
+    console.log("Sync Success");
+  })
+  .catch((err) => {
+    console.error("Error syncing the database:", err);
+  });
 
 module.exports = db;

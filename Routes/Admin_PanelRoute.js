@@ -9,17 +9,17 @@ const express = require("express");
 
 const route = express.Router();
 
-route.post("/AddAdmin", auth, async (req, res) => {
-  const { Username, MasterKey } = req.body;
+route.post("/AddAdmin", async (req, res) => {
+  const { Username, MasterKey, Token } = req.body;
   if (Username && MasterKey) {
     try {
-      const result = await AddUserAdmin(Username, MasterKey);
-      res.status(200).json({ Message: "Successfully Created the Admin" });
+      const result = await AddUserAdmin(Username, MasterKey, Token);
+      res.status(200).json(result);
     } catch (error) {
-      res.status(400).json({ Message: "User Already Exists" });
+      res.status(400).json(error);
     }
   } else {
-    res.status(404).json({ Message: "Invalid credentials" });
+    res.status(404).json("Error while parsing");
   }
 });
 
@@ -53,7 +53,7 @@ route.post("/VerifyAdmin", async (req, res) => {
           console.log(result);
           res.status(200).json(result);
         } else {
-          res.status(404).json({ Message: "Invalid credentials" });
+          res.status(404).json(result);
         }
       });
     } catch (error) {
