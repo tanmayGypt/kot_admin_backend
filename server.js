@@ -16,6 +16,8 @@ const auth = require("./auth");
 const OrderedItemsRoute = require("./Routes/OrderedItemsRoute");
 const md5 = require("md5");
 const cookieParser = require("cookie-parser");
+const CryptoJS = require("crypto-js");
+
 require("dotenv").config();
 app.use(express.json());
 
@@ -30,9 +32,18 @@ app.use(cookieParser());
 
 const PORT = process.env.PORT || 3000;
 
-app.get("/", async (req, res) => {
-  console.log(req.cookies);
-  res.send("Server Started, This is Homepage");
+app.get("/:input", async (req, res) => {
+  const input = req.params.input;
+
+  // Function to generate SHA-256 hash
+  function generateHash(input) {
+    return CryptoJS.SHA256(input).toString(CryptoJS.enc.Hex);
+  }
+
+  const hash = generateHash(input);
+  console.log(hash); // Prints the SHA-256 hash of the input
+
+  res.send(hash);
 });
 
 app.use("/Admin_Panel", Admin_PanelRoute);

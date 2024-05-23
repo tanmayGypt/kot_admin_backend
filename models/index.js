@@ -39,7 +39,7 @@ db.Rooms = require("./Rooms")(sequelize, DataTypes);
 db.OrderItem = require("./OrderedItems")(sequelize, DataTypes);
 
 db.sequelize
-  .sync({ force: true })
+  .sync()
   .then(() => {
     console.log("Sync Success");
   })
