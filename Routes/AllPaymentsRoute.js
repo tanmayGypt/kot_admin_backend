@@ -8,8 +8,7 @@ const {
 const AllPaymentRoute = express.Router();
 
 AllPaymentRoute.post("/AddAllPayment", (req, res) => {
-  const { OrderId, RoomId, PaymentStatus, PaymentMode, OrderDetails } =
-    req.body;
+  const { OrderId, RoomId, PaymentStatus, PaymentMode } = req.body;
   PaymentId = uuidv4();
   TransactionId = uuidv4();
   AddAllPayment(
@@ -18,8 +17,7 @@ AllPaymentRoute.post("/AddAllPayment", (req, res) => {
     OrderId,
     RoomId,
     PaymentStatus,
-    PaymentMode,
-    OrderDetails
+    PaymentMode
   )
     .then((items) => {
       res.status(200).json(items);

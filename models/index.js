@@ -9,7 +9,6 @@ const sequelize = new Sequelize(
     host: process.env.AmazonRDSendpoint,
     port: process.env.AmazonRDSport,
     dialect: "mysql",
-    logging: false, // Disable logging; default: console.log
   }
 );
 
@@ -40,7 +39,7 @@ db.Rooms = require("./Rooms")(sequelize, DataTypes);
 db.OrderItem = require("./OrderedItems")(sequelize, DataTypes);
 
 db.sequelize
-  .sync()
+  .sync({ force: true })
   .then(() => {
     console.log("Sync Success");
   })

@@ -28,10 +28,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      OrderDetails: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
     },
     {
       tableName: "All_Payments", // Explicit table name

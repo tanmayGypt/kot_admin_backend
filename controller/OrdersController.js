@@ -15,8 +15,9 @@ const AddNewOrder = async (
   OrderStatus
 ) => {
   try {
-    let Room = FetchRoomById(RoomId);
-    if (Room) {
+    let Room = await FetchRoomById(RoomId);
+    console.log(Room);
+    if (Room.RoomId) {
       let result = await Order.create({
         OrderId,
         CustomerId,
@@ -25,7 +26,7 @@ const AddNewOrder = async (
         RoomId: Room.RoomNumber,
         CreatedAt,
         Payment_Mode,
-        OrderStatus,
+        OrderStatus: OrderStatus,
       });
       console.log("Order created successfully:", result);
       return result;
