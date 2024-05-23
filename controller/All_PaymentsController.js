@@ -21,7 +21,6 @@ const AddAllPayment = async (
       RoomId,
       Status,
       PaymentMode,
-      OrderDetails,
     });
     console.log(data);
     console.log("Payment Inserted Succesfully");

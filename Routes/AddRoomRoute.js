@@ -64,7 +64,7 @@ RoomRoute.get("/FetchRoomByEncoded/:EncodedRoomNo", async (req, res) => {
   try {
     const Row = await Rooms.findOne({ where: { EncodedRoomNo } })
     if (!Row) {
-      res.status(404).json("room not found")
+      res.status(404).json(Row)
       return
     }
     res.status(200).json(Row)

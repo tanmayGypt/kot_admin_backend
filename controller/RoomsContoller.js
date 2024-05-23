@@ -93,4 +93,10 @@ const FetchAllRooms = async () => {
   }
 }
 
-module.exports = { FetchAllRooms, UpdateRoom, AddnewRoom, FetchRoomById }
+module.exports = {
+  FetchAllRooms,
+  UpdateRoom,
+  AddnewRoom,
+  FetchRoomById,
+  UpdateRoomById,
+}

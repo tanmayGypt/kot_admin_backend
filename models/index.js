@@ -9,7 +9,6 @@ const sequelize = new Sequelize(
     host: process.env.AmazonRDSendpoint,
     port: process.env.AmazonRDSport,
     dialect: "mysql",
-    logging: false, // Disable logging; default: console.log
   }
 );
 
