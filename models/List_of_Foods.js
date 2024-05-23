@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       // Options
       tableName: "List_of_Foods", // Explicit table name
-      timestamps: false, // Disable timestamps if you don't want `createdAt` and `updatedAt`
+      timestamps: true, // Disable timestamps if you don't want `createdAt` and `updatedAt`
     }
   );
 

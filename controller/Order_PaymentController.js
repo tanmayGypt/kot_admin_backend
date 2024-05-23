@@ -21,7 +21,12 @@ let AddNewOrderPayment = async (Order_PaymentId, PaymentId, OrderId) => {
 
 let FetchAllPaymentsOfOrder = async () => {
   try {
-    let response = await Order_Payments.findAll({});
+    let response = await Order_Payments.findAll({
+      order: [
+        ["createdAt", "DESC"], // Primary sorting by createdAt in descending order
+        ["updatedAt", "ASC"], // Secondary sorting by updatedAt in ascending order
+      ],
+    });
     return response;
   } catch (e) {
     return;

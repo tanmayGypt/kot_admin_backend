@@ -21,7 +21,12 @@ const addOrderItem = async (orderId, itemId, Item_Name, price, quantity) => {
 
 const fetchAllOrderItems = async () => {
   try {
-    const orderItems = await OrderItem.findAll();
+    const orderItems = await OrderItem.findAll({
+      order: [
+        ["createdAt", "DESC"], // Primary sorting by createdAt in descending order
+        ["updatedAt", "ASC"], // Secondary sorting by updatedAt in ascending order
+      ],
+    });
     console.log("All order items:", orderItems);
     return orderItems;
   } catch (error) {

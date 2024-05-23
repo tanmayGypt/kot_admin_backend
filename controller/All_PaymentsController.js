@@ -34,7 +34,9 @@ const AddAllPayment = async (
 
 const FetchAllPayments = async () => {
   try {
-    let data = await All_Payments.findAll();
+    let data = await All_Payments.findAll({
+      order: [["creationDate", "DESC"]],
+    });
     return data;
   } catch (e) {
     return null;

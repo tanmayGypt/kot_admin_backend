@@ -57,7 +57,12 @@ let UpdateFood = async (
 
 let FetchAllFoods = async () => {
   try {
-    let data = await List_of_Foods.findAll({});
+    let data = await List_of_Foods.findAll({
+      order: [
+        ["createdAt", "DESC"], // Primary sorting by createdAt in descending order
+        ["updatedAt", "ASC"], // Secondary sorting by updatedAt in ascending order
+      ],
+    });
 
     return data;
   } catch (e) {

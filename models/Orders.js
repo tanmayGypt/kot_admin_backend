@@ -26,10 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BIGINT,
         allowNull: true,
       },
-      CreatedAt: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
+
       Payment_Mode: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -42,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       // Options
       tableName: "Orders", // Explicit table name
-      timestamps: false, // Disable timestamps if you don't want `createdAt` and `updatedAt`
+      timestamps: true, // Disable timestamps if you don't want `createdAt` and `updatedAt`
     }
   );
 

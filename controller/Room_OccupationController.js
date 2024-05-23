@@ -32,7 +32,12 @@ let AddNewOccupation = async (
 
 let FetchAllRoomOccupations = async () => {
   try {
-    let result = await Room_Occupation.findAll({});
+    let result = await Room_Occupation.findAll({
+      order: [
+        ["createdAt", "DESC"], // Primary sorting by createdAt in descending order
+        ["updatedAt", "ASC"], // Secondary sorting by updatedAt in ascending order
+      ],
+    });
     return result;
   } catch (e) {
     return;
