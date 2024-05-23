@@ -57,7 +57,7 @@ RoomRoute.get("/FetchRoomById/:RoomId", (req, res) => {
       res.status(400).json(err)
     })
 })
-RoomRoute.get("/FetchRoomByEncoded/:EncodedRoomNo", auth, async (req, res) => {
+RoomRoute.get("/FetchRoomByEncoded/:EncodedRoomNo", async (req, res) => {
   const EncodedRoomNo = req.params.EncodedRoomNo
   console.log("enco", EncodedRoomNo)
 

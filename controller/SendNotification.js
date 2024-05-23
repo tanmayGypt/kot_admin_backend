@@ -1,39 +1,36 @@
-const fcmNode = require("fcm-node")
+const { admin } = require("../firebase")
+const { Admin_Panel } = require("../models")
 
-async function sendNotification() {
-  const serverKey =
-    "SKxsIRtaRI6bfXVl:APA91bGdR_sOw5wumZS2T1OAD6qcjpnXoFGvStExM2pSyMQWRSqA0RGpYYZIOpDDeSlOzYmKFtuILykgU3YV0FK_xtdwGiSxwPjdsgGD8bRwzCbd61IpFX1Sro4mTBKUPkJtT5VhzfOD"
-
-  const fcm = new fcmNode(serverKey)
-  const registrationToken =
-    "SKxsIRtaRI6bfXVl:APA91bGdR_sOw5wumZS2T1OAD6qcjpnXoFGvStExM2pSyMQWRSqA0RGpYYZIOpDDeSlOzYmKFtuILykgU3YV0FK_xtdwGiSxwPjdsgGD8bRwzCbd61IpFX1Sro4mTBKUPkJtT5VhzfOD"
+async function sendNotification(orderId, roomNumber) {
+  let token
+  const data = await Admin_Panel.findOne({})
+  // const Token = data.AdminPanel
+  // console.log("token", data.Token)
+  if (data) {
+    token = data.Token
+  } else {
+    console.log(`No admin found with username: ${username}`)
+    return null
+  }
+  console.log("/send-notification")
 
   const message = {
     notification: {
-      title: "OrderId",
-      body: "RoomNumber",
+      title: orderId,
+      body: `${roomNumber}`,
     },
-    to: registrationToken,
+    token,
   }
-  // Send a message to the device corresponding to the provided
-  // registration token.
-  //   getMessaging()
-  //     .send(message)
-  //     .then((response) => {
-  //       // Response is a message ID string.
-  //       console.log("Successfully sent message:", response)
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error sending message:", error)
-  //     })
 
-  fcm.send(message, function (err, res) {
-    if (err) {
-      console.error("error sending message: ", err)
-    } else {
-      console.log("successfully sent message: ", res)
-    }
-  })
+  try {
+    const response = await admin.messaging().send(message)
+    // res.status(200).send(`Notification sent successfully: ${response}`)
+    console.log(`Notification sent successfully: ${response}`)
+    return
+  } catch (error) {
+    // res.status(500).send(`Error sending notification: ${error}`)
+    console.log(`Error sending notification: ${error}`)
+  }
 }
 
 module.exports = { sendNotification }

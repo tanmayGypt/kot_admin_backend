@@ -1,26 +1,26 @@
-const md5 = require("md5"); // Ensure you have the md5 package installed
-const db = require("../models");
-const { where } = require("sequelize");
+const { generateHash } = require("../TokenGenerator")
+const db = require("../models")
+const { where } = require("sequelize")
 
-const Rooms = db.Rooms;
+const Rooms = db.Rooms
 
 const AddnewRoom = async (RoomNumber, isOccupied, GuestId, MobileNumber) => {
   try {
-    let EncodedRoomNo = md5(RoomNumber);
+    const EncodedRoomNo = generateHash(RoomNumber)
     let result = await Rooms.create({
       EncodedRoomNo,
       RoomNumber,
       isOccupied,
       GuestId,
       MobileNumber,
-    });
+    })
     // console.log(result);
-    return result;
+    return result
   } catch (e) {
     // console.error("Error adding new room:", e);
-    return e;
+    return e
   }
-};
+}
 
 const UpdateRoom = async (
   RoomId,
@@ -41,30 +41,30 @@ const UpdateRoom = async (
         {
           where: { RoomId },
         }
-      );
-      console.log("Update Success " + Result);
-      return Result;
+      )
+      console.log("Update Success " + Result)
+      return Result
     } catch (err) {
-      console.error("Error updating room:", err);
-      return err;
+      console.error("Error updating room:", err)
+      return err
     }
   } else {
-    throw new Error("Please Fill All The fields of updating room");
+    throw new Error("Please Fill All The fields of updating room")
   }
-};
+}
 
 const FetchRoomById = async (RoomId) => {
   try {
-    let Row = await Rooms.findOne({ where: { RoomId } });
-    return Row;
+    let Row = await Rooms.findOne({ where: { RoomId } })
+    return Row
   } catch (e) {
-    return null;
+    return null
   }
-};
+}
 
 const UpdateRoomById = async (RoomId, isOccupied) => {
   try {
-    let Row = await Rooms.findOne({ where: { RoomId } });
+    let Row = await Rooms.findOne({ where: { RoomId } })
     if (!Row.GuestId && !Row.MobileNumber) {
       let response = await Rooms.update(
         { isOccupied },
@@ -73,24 +73,24 @@ const UpdateRoomById = async (RoomId, isOccupied) => {
             RoomId,
           },
         }
-      );
-      return response;
+      )
+      return response
     }
-    return null;
+    return null
   } catch (e) {
-    return null;
+    return null
   }
-};
+}
 
 const FetchAllRooms = async () => {
   try {
-    let AllRooms = await Rooms.findAll({});
-    console.log(AllRooms);
-    return AllRooms;
+    let AllRooms = await Rooms.findAll({})
+    console.log(AllRooms)
+    return AllRooms
   } catch (err) {
-    console.error("Error fetching all rooms:", err);
-    return null;
+    console.error("Error fetching all rooms:", err)
+    return null
   }
-};
+}
 
-module.exports = { FetchAllRooms, UpdateRoom, AddnewRoom, FetchRoomById };
+module.exports = { FetchAllRooms, UpdateRoom, AddnewRoom, FetchRoomById }

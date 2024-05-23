@@ -1,6 +1,7 @@
 const { where } = require("sequelize")
 const db = require("../models")
 const { FetchRoomById } = require("./RoomsContoller")
+const { sendNotification } = require("./SendNotification")
 
 const Order = db.Orders
 
@@ -15,7 +16,7 @@ const AddNewOrder = async (
   OrderStatus
 ) => {
   try {
-    let Room = FetchRoomById(RoomId)
+    let Room = await FetchRoomById(RoomId)
     if (Room) {
       let result = await Order.create({
         OrderId,
@@ -27,6 +28,10 @@ const AddNewOrder = async (
         Payment_Mode,
         OrderStatus,
       })
+
+      if (result) {
+        sendNotification(OrderId, Room.RoomNumber)
+      }
       console.log("Order created successfully:", result)
       return result
     } else {
