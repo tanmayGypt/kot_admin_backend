@@ -90,14 +90,15 @@ const FetchOrderById = async (OrderId) => {
   }
 };
 
-const FetchOrderByCustomerId = async (CustomerId) => {
+const FetchUnbilledOrder = async (CustomerId) => {
   try {
-    let response = await Order.findOne({
+    let response = await Order.findAll({
       where: {
         CustomerId,
         isPaid: false,
       },
     });
+
     console.log("Order fetched successfully:", response);
     return response;
   } catch (error) {
@@ -110,5 +111,5 @@ module.exports = {
   UpdateOrder,
   FetchAllOrders,
   FetchOrderById,
-  FetchOrderByCustomerId,
+  FetchUnbilledOrder,
 };
