@@ -71,7 +71,12 @@ const UpdateOrder = async (OrderId, Status, Payment_Mode, OrderStatus) => {
 
 const FetchAllOrders = async () => {
   try {
-    let response = await Order.findAll({})
+    let response = await Order.findAll({
+      order: [
+        ["createdAt", "DESC"], // Primary sorting by createdAt in descending order
+        ["updatedAt", "ASC"], // Secondary sorting by updatedAt in ascending order
+      ],
+    })
     console.log("Orders fetched successfully:", response)
     return response
   } catch (error) {

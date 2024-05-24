@@ -17,7 +17,6 @@ const OrderedItemsRoute = require("./Routes/OrderedItemsRoute")
 const md5 = require("md5")
 const cookieParser = require("cookie-parser")
 const { admin } = require("./firebase")
-const { subscribeToTopic } = require("./controller/SendNotificationControllers")
 require("dotenv").config()
 app.use(express.json())
 
@@ -69,8 +68,8 @@ app.use("/OrderItems", OrderedItemsRoute)
 
 // testing for notification
 // app.post("/send-notification", async (req, res) => {
-//   console.log("/send-notification")
-//   const { token, title, body } = req.body
+//   console.log("/send-notification");
+//   const { token, title, body } = req.body;
 
 //   const message = {
 //     notification: {
@@ -78,15 +77,15 @@ app.use("/OrderItems", OrderedItemsRoute)
 //       body: body,
 //     },
 //     token: token,
-//   }
+//   };
 
 //   try {
-//     const response = await admin.messaging().send(message)
-//     res.status(200).send(`Notification sent successfully: ${response}`)
+//     const response = await admin.messaging().send(message);
+//     res.status(200).send(`Notification sent successfully: ${response}`);
 //   } catch (error) {
-//     res.status(500).send(`Error sending notification: ${error}`)
+//     res.status(500).send(`Error sending notification: ${error}`);
 //   }
-// })
+// });
 
 app.listen(PORT, () => {
   console.log(`Backend Server is started on port ${PORT}`)

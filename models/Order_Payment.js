@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       // Options
       tableName: "Order_Payments", // Explicit table name
-      timestamps: false, // Disable timestamps if you don't want `createdAt` and `updatedAt`
+      timestamps: true, // Disable timestamps if you don't want `createdAt` and `updatedAt`
     }
   );
 

@@ -34,10 +34,14 @@ const AddAllPayment = async (
 
 const FetchAllPayments = async () => {
   try {
-    let data = await All_Payments.findAll();
+    const data = await All_Payments.findAll({
+      order: [["createdAt", "DESC"]],
+    });
     return data;
-  } catch (e) {
-    return null;
+  } catch (error) {
+    console.error("Error fetching payments:", error);
+    return [];
   }
 };
+
 module.exports = { AddAllPayment, FetchAllPayments };
