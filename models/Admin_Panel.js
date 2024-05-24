@@ -8,10 +8,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         allowNull: false,
       },
-      Token: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
       MasterKey: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -22,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "Admin_Panel", // Explicit table name
       timestamps: false, // Disable timestamps if you don't want `createdAt` and `updatedAt`
     }
-  );
+  )
 
-  return AdminPanel;
-};
+  return AdminPanel
+}

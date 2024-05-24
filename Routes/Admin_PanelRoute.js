@@ -6,6 +6,9 @@ const {
   UpdateAdmin,
 } = require("../controller/Admin_PanelController")
 const express = require("express")
+const {
+  subscribeToTopic,
+} = require("../controller/SendNotificationControllers")
 
 const route = express.Router()
 
@@ -20,22 +23,6 @@ route.post("/AddAdmin", async (req, res) => {
     }
   } else {
     res.status(404).json("Error while parsing")
-  }
-})
-
-route.post("/UpdateAdmin", async (req, res) => {
-  const { Token, Username } = req.body
-  if (Token) {
-    try {
-      const result = await UpdateAdmin(Token, Username)
-      if (result) {
-        res.status(200).json({ Message: "Successfully Updated the Admin" })
-      }
-    } catch (error) {
-      res.status(400).json({ Message: "User Already Exists" })
-    }
-  } else {
-    res.status(404).json({ Message: "Invalid credentials" })
   }
 })
 
@@ -63,6 +50,20 @@ route.post("/VerifyAdmin", async (req, res) => {
     }
   } else {
     res.status(404).json({ Message: "Invalid credentials" })
+  }
+})
+
+route.post("/subscribeToTopic", async (req, res) => {
+  const { token } = req.body
+  if (token) {
+    try {
+      await subscribeToTopic(token)
+      res.status(200).json({ Message: "subscribed to topic" })
+    } catch (error) {
+      res.status(400).json({ Message: "Error subscribing" })
+    }
+  } else {
+    res.status(404).json({ Message: "token not found" })
   }
 })
 

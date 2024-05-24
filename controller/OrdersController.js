@@ -1,7 +1,7 @@
 const { where } = require("sequelize")
 const db = require("../models")
 const { FetchRoomById } = require("./RoomsContoller")
-const { sendNotification } = require("./SendNotification")
+const { sendNotification } = require("./SendNotificationControllers")
 
 const Order = db.Orders
 
