@@ -60,7 +60,7 @@ route.post("/VerifyGuest", (req, res) => {
     });
 });
 
-route.get("/FetchAllGuests", (req, res) => {
+route.get("/FetchAllGuests", auth, (req, res) => {
   FetchAllGuests()
     .then((Items) => {
       res.status(200).send(Items);
