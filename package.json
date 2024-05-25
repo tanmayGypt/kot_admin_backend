@@ -27,7 +27,6 @@
     "mysql2": "^3.9.7",
     "nanoid": "^5.0.7",
     "sequelize": "^6.37.3",
-    "sql": "^0.78.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
