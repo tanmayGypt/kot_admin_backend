@@ -7,6 +7,9 @@ const Rooms = db.Rooms;
 const AddnewRoom = async (RoomNumber, isOccupied, GuestId, MobileNumber) => {
   try {
     const EncodedRoomNo = generateHash(RoomNumber);
+    console.log(RoomNumber);
+    console.log(EncodedRoomNo);
+
     let result = await Rooms.create({
       EncodedRoomNo,
       RoomNumber,
