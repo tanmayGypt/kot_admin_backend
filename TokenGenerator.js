@@ -28,8 +28,11 @@ const adminTokenGenerator = (Username) => {
 };
 
 function generateHash(value) {
-  const fullHash = crypto.createHash("sha256").update(`value`).digest("hex");
+  const stringValue = JSON.stringify(value);
+  const fullHash = crypto
+    .createHash("sha256")
+    .update(stringValue)
+    .digest("hex");
   return fullHash;
 }
-
 module.exports = { guestTokenGenerator, adminTokenGenerator, generateHash };

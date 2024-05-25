@@ -8,7 +8,7 @@ const AddnewRoom = async (RoomNumber, isOccupied, GuestId, MobileNumber) => {
   try {
     const EncodedRoomNo = generateHash(RoomNumber);
     console.log(RoomNumber);
-    console.log(EncodedRoomNo);
+    console.log(RoomNumber, EncodedRoomNo);
 
     let result = await Rooms.create({
       EncodedRoomNo,
