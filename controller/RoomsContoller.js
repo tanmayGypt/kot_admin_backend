@@ -89,8 +89,7 @@ const FetchAllRooms = async () => {
   try {
     let AllRooms = await Rooms.findAll({
       order: [
-        ["createdAt", "DESC"], // Primary sorting by createdAt in descending order
-        ["updatedAt", "ASC"], // Secondary sorting by updatedAt in ascending order
+        ["RoomNumber", "DESC"], // Sorting by RoomNumber in descending order
       ],
     });
     console.log(AllRooms);
