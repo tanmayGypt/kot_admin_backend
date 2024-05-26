@@ -98,7 +98,7 @@ const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
         MobileNumber,
       },
     });
-    if (response) {
+    if (!response) {
       return null;
     }
     try {
