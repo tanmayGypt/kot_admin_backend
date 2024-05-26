@@ -11,7 +11,6 @@ const AddNewOrder = async (
   isPaid,
   TotalAmount,
   RoomId,
-  CreatedAt,
   Payment_Mode,
   OrderStatus
 ) => {
@@ -24,7 +23,6 @@ const AddNewOrder = async (
         isPaid,
         TotalAmount,
         RoomId: Room.RoomNumber,
-        CreatedAt,
         Payment_Mode,
         OrderStatus,
       })
