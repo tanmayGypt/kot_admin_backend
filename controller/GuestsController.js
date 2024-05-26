@@ -99,7 +99,7 @@ const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
       },
     });
     if (response) {
-      res.status(400).json(e);
+      return null;
     }
     try {
       const Row = await Rooms.findOne({ where: { EncodedRoomNo } });
