@@ -3,7 +3,7 @@ const db = require("../models")
 const { Where } = require("sequelize/lib/utils")
 const { generateHash } = require("../TokenGenerator")
 const Guests = db.Guests
-
+const Rooms = db.Rooms
 const AddGuest = async (
   RoomNumber,
   RoomId,
