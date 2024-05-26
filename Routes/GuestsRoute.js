@@ -43,7 +43,6 @@ route.post("/AddGuest", auth, (req, res) => {
 route.post("/VerifyGuest", async (req, res) => {
   const EncodedRoomNo = req.query.roomId
   const { MobileNumber } = req.body
-
   try {
     const item = await VerifyGuest(MobileNumber, EncodedRoomNo)
     if (item) {
@@ -53,7 +52,6 @@ route.post("/VerifyGuest", async (req, res) => {
       })
       res.send(item)
     } else {
-      console.log("not found")
       res.status(400).json("Invalid Credentials")
     }
   } catch (Err) {

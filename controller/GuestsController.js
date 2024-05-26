@@ -93,10 +93,20 @@ const DeleteGuestById = async (RoomId) => {
 
 const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
   try {
-    const Row = await Rooms.findOne({ where: { EncodedRoomNo } })
+    const response = await Guests.findOne({
+      where: {
+        MobileNumber,
+      },
+    })
+
+    if (!response) {
+      return false
+    }
+    const Row = await db.Rooms.findOne({ where: { EncodedRoomNo } })
     if (!Row) {
       return false
     }
+    console.log(Row.MobileNumber)
     if (MobileNumber == Row.MobileNumber) {
       return Row
     }
