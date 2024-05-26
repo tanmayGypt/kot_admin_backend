@@ -55,7 +55,7 @@ route.post("/VerifyGuest", (req, res) => {
         });
         res.statusCode(200).json(item);
       } else {
-        res.status(400).json("Invalid Credentials");
+        res.status(400).json(item);
       }
     })
     .catch((Err) => {
