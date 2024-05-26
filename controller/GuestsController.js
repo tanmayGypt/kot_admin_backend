@@ -93,12 +93,30 @@ const DeleteGuestById = async (RoomId) => {
 
 const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
   try {
+<<<<<<< HEAD
     const Row = await Rooms.findOne({ where: { EncodedRoomNo } })
     if (!Row) {
       return false
     }
     if (MobileNumber == Row.MobileNumber) {
       return Row
+=======
+    const response = await Guests.findOne({
+      where: {
+        MobileNumber,
+      },
+    });
+    if (!response) {
+      return false;
+    }
+    try {
+      const Row = await Rooms.findOne({ where: { EncodedRoomNo } });
+      if (!Row) {
+        return;
+      } else if (MobileNumber == Row.MobileNumber && response) return response;
+    } catch (e) {
+      return false;
+>>>>>>> 996c0b48afe1d5444ea0d97c96a02815f6572e0a
     }
     return false
   } catch (e) {
