@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "Orders", // Explicit table name
       timestamps: true,
     }
-  )
+  );
 
-  return Order
-}
+  return Order;
+};

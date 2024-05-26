@@ -1,4 +1,4 @@
-// models/RoomOccupationTransaction.js
+const moment = require("moment");
 const { v4: uuidv4 } = require("uuid");
 
 module.exports = (sequelize, DataTypes) => {
@@ -44,15 +44,56 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      MobileNumber: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
     },
     {
       // Options
       tableName: "Room_Occupation_Transaction", // Explicit table name
-      timestamps: true, // Disable timestamps if you don't want `createdAt` and `updatedAt`
+      timestamps: true, // Enable timestamps
+      hooks: {
+        beforeCreate: (transaction) => {
+          transaction.Checked_In_Date = moment(
+            transaction.Checked_In_Date,
+            "YYYY-MM-DD"
+          ).format("DD-MM-YYYY");
+          transaction.Checked_Out_Date = moment(
+            transaction.Checked_Out_Date,
+            "YYYY-MM-DD"
+          ).format("DD-MM-YYYY");
+        },
+        beforeUpdate: (transaction) => {
+          transaction.Checked_In_Date = moment(
+            transaction.Checked_In_Date,
+            "YYYY-MM-DD"
+          ).format("DD-MM-YYYY");
+          transaction.Checked_Out_Date = moment(
+            transaction.Checked_Out_Date,
+            "YYYY-MM-DD"
+          ).format("DD-MM-YYYY");
+        },
+        afterFind: (result) => {
+          if (Array.isArray(result)) {
+            result.forEach((record) => {
+              record.Checked_In_Date = moment(
+                record.Checked_In_Date,
+                "YYYY-MM-DD"
+              ).format("DD-MM-YYYY");
+              record.Checked_Out_Date = moment(
+                record.Checked_Out_Date,
+                "YYYY-MM-DD"
+              ).format("DD-MM-YYYY");
+            });
+          } else if (result) {
+            result.Checked_In_Date = moment(
+              result.Checked_In_Date,
+              "YYYY-MM-DD"
+            ).format("DD-MM-YYYY");
+            result.Checked_Out_Date = moment(
+              result.Checked_Out_Date,
+              "YYYY-MM-DD"
+            ).format("DD-MM-YYYY");
+          }
+        },
+      },
     }
   );
 
