@@ -98,13 +98,20 @@ const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
         MobileNumber,
       },
     });
-    const Hash = generateHash(response.RoomNumber);
-    console.log("hash", Hash);
-    if (response && Hash == EncodedRoomNo) {
-      const { GuestId, RoomId, RoomNumber } = response;
-      const result = { GuestId, RoomId, RoomNumber };
-      return result;
+    if (response) {
+      res.status(400).json(e);
     }
+    try {
+      const Row = await Rooms.findOne({ where: { EncodedRoomNo } });
+      if (!Row) {
+        res.status(404).json(Row);
+        return;
+      } else if (MobileNumber == Row.MobileNumber && response)
+        res.status(200).json(Row);
+    } catch (e) {
+      res.status(400).json(e);
+    }
+
     return false;
   } catch (e) {
     console.error("Error verifying guest:", e);
