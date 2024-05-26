@@ -45,12 +45,12 @@ route.post("/VerifyGuest", (req, res) => {
   const { MobileNumber } = req.body;
   VerifyGuest(MobileNumber, EncodedRoomNo)
     .then((item) => {
-      if (item.MobileNumber == MobileNumber) {
+      if (item.MobileNumber === MobileNumber) {
         const token = guestTokenGenerator(EncodedRoomNo, MobileNumber);
         res.cookie("jwt", token, {
           maxAge: 30 * 60 * 1000, // 30 min
         });
-        res.send(item);
+        res.statusCode(200).json(item);
       } else {
         res.status(400).json("Invalid Credentials");
       }
