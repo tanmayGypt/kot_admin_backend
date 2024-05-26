@@ -1,8 +1,8 @@
-const { Op } = require("sequelize"); // Import necessary operators from sequelize
-const db = require("../models");
-const { Where } = require("sequelize/lib/utils");
-const { generateHash } = require("../TokenGenerator");
-const Guests = db.Guests;
+const { Op } = require("sequelize") // Import necessary operators from sequelize
+const db = require("../models")
+const { Where } = require("sequelize/lib/utils")
+const { generateHash } = require("../TokenGenerator")
+const Guests = db.Guests
 
 const AddGuest = async (
   RoomNumber,
@@ -14,8 +14,8 @@ const AddGuest = async (
   IdentityNumber_Hashed,
   MobileNumber
 ) => {
-  IdentityNumber_HashedModified = generateHash(IdentityNumber_Hashed);
-  const GuestId = generateHash(RoomNumber + MobileNumber);
+  IdentityNumber_HashedModified = generateHash(IdentityNumber_Hashed)
+  const GuestId = generateHash(RoomNumber + MobileNumber)
   try {
     let data = await Guests.create({
       GuestId,
@@ -27,14 +27,14 @@ const AddGuest = async (
       IdentityType,
       IdentityNumber_Hashed: IdentityNumber_HashedModified,
       MobileNumber,
-    });
-    console.log("Data Inserted Successfully");
-    return data;
+    })
+    console.log("Data Inserted Successfully")
+    return data
   } catch (e) {
-    console.log(e);
-    return null; // Return null in case of error
+    console.log(e)
+    return null // Return null in case of error
   }
-};
+}
 
 const FetchAllGuests = async () => {
   try {
@@ -43,13 +43,13 @@ const FetchAllGuests = async () => {
         ["createdAt", "DESC"], // Primary sorting by createdAt in descending order
         ["updatedAt", "ASC"], // Secondary sorting by updatedAt in ascending order
       ],
-    });
-    return GuestData;
+    })
+    return GuestData
   } catch (e) {
-    console.error("Error fetching guests:", e);
-    return null; // Return null in case of error
+    console.error("Error fetching guests:", e)
+    return null // Return null in case of error
   }
-};
+}
 
 const FetchGuestById = async (RoomId) => {
   try {
@@ -57,65 +57,54 @@ const FetchGuestById = async (RoomId) => {
       where: {
         RoomId,
       },
-    });
-    return GuestData;
+    })
+    return GuestData
   } catch (e) {
-    console.error("Error fetching guest:", e);
-    return null;
+    console.error("Error fetching guest:", e)
+    return null
   }
-};
+}
 
 const DeleteGuestById = async (RoomId) => {
   try {
     if (!RoomId) {
-      throw new Error("RoomId is required");
+      throw new Error("RoomId is required")
     }
     const GuestData = await Guests.destroy({
       where: {
         RoomId,
       },
-    });
+    })
 
     if (GuestData === 0) {
-      console.log(`No guest found with RoomId: ${RoomId}`);
-      return { message: `No guest found with RoomId: ${RoomId}` };
+      console.log(`No guest found with RoomId: ${RoomId}`)
+      return { message: `No guest found with RoomId: ${RoomId}` }
     }
 
     return {
       message: `Guest with RoomId: ${RoomId} successfully deleted`,
       result: GuestData,
-    };
+    }
   } catch (e) {
-    console.error(`Error deleting guest with RoomId: ${RoomId}`, e);
-    return { error: e.message };
+    console.error(`Error deleting guest with RoomId: ${RoomId}`, e)
+    return { error: e.message }
   }
-};
+}
 
 const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
   try {
-    const response = await Guests.findOne({
-      where: {
-        MobileNumber,
-      },
-    });
-    if (!response) {
-      return null;
+    const Row = await Rooms.findOne({ where: { EncodedRoomNo } })
+    if (!Row) {
+      return false
     }
-    try {
-      const Row = await Rooms.findOne({ where: { EncodedRoomNo } });
-      if (!Row) {
-        return;
-      } else if (MobileNumber == Row.MobileNumber && response) return response;
-    } catch (e) {
-      return e;
+    if (MobileNumber == Row.MobileNumber) {
+      return Row
     }
-
-    return false;
+    return false
   } catch (e) {
-    console.error("Error verifying guest:", e);
-    return false; // Return false in case of error
+    return false
   }
-};
+}
 
 module.exports = {
   AddGuest,
@@ -123,4 +112,4 @@ module.exports = {
   VerifyGuest,
   FetchGuestById,
   DeleteGuestById,
-};
+}
