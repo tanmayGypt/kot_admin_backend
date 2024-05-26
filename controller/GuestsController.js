@@ -104,12 +104,10 @@ const VerifyGuest = async (MobileNumber, EncodedRoomNo) => {
     try {
       const Row = await Rooms.findOne({ where: { EncodedRoomNo } });
       if (!Row) {
-        res.status(404).json(Row);
         return;
-      } else if (MobileNumber == Row.MobileNumber && response)
-        res.status(200).json(Row);
+      } else if (MobileNumber == Row.MobileNumber && response) return response;
     } catch (e) {
-      res.status(400).json(e);
+      return e;
     }
 
     return false;
