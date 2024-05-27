@@ -28,7 +28,7 @@ List_of_FoodsRoute.post("/AddNewFood", (req, res) => {
     FoodName,
     Price,
     Discount,
-    Catagory,
+    Category,
   } = req.body;
   AddNewFood(
     FoodId,
@@ -39,7 +39,7 @@ List_of_FoodsRoute.post("/AddNewFood", (req, res) => {
     FoodName,
     Price,
     Discount,
-    Catagory
+    Category
   )
     .then((item) => {
       res.status(200).json(item);

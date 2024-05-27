@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      Catagory: {
+      Category: {
         type: DataTypes.STRING,
         allowNull: true,
       },
