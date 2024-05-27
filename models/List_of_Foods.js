@@ -38,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
+      Catagory: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       // Options

@@ -11,7 +11,8 @@ let AddNewFood = async (
   ImageUrl,
   FoodName,
   Price,
-  Discount
+  Discount,
+  Catagory
 ) => {
   try {
     let data = await List_of_Foods.create({
@@ -23,6 +24,7 @@ let AddNewFood = async (
       FoodName,
       Price,
       Discount,
+      Catagory,
     });
     return data;
   } catch (e) {
@@ -38,11 +40,21 @@ let UpdateFood = async (
   ImageUrl,
   FoodName,
   Price,
-  Discount
+  Discount,
+  Catagory
 ) => {
   try {
     let data = await List_of_Foods.update(
-      { Description, isVeg, isAvailable, ImageUrl, FoodName, Price, Discount },
+      {
+        Description,
+        isVeg,
+        isAvailable,
+        ImageUrl,
+        FoodName,
+        Price,
+        Discount,
+        Catagory,
+      },
       {
         where: {
           FoodId: FoodId,
